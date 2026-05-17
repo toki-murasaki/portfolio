@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(New-Item *)",
+      "PowerShell(Get-ChildItem C:\\\\portfolio -Recurse | ForEach-Object { $_.FullName })"
+    ]
+  }
+}
