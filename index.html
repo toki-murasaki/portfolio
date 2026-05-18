@@ -54,12 +54,9 @@
         }
         .banner-bana {
             height: 38px;
-            width: 72px;
-            object-fit: cover;
-            object-position: center;
+            width: auto;
             display: block;
             flex-shrink: 0;
-            border-radius: 4px;
         }
         .banner-inner {
             max-width: 1100px;
@@ -300,12 +297,9 @@
             gap: 56px;
         }
         .hero-meishi {
-            height: 340px;
-            width: 340px;
-            border-radius: 50%;
-            object-fit: cover;
-            object-position: center;
-            box-shadow: 0 24px 64px rgba(0,0,0,0.65), 0 0 0 1px rgba(110,198,232,0.2);
+            height: calc(88vh - 160px);
+            max-height: 460px;
+            width: auto;
             flex-shrink: 0;
         }
         .hero-text { text-align: left; }
@@ -1200,7 +1194,7 @@
             /* ヒーロー */
             #hero { min-height: 80vh; padding: 48px 16px; }
             .hero-content { flex-direction: column; gap: 32px; }
-            .hero-meishi { height: 260px; width: 260px; }
+            .hero-meishi { height: 260px; width: auto; max-height: none; }
             .hero-text { text-align: center; }
             .hero-divider { margin: 0 auto 22px; }
             .hero-sns { justify-content: center; gap: 10px; }

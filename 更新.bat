@@ -1,20 +1,17 @@
 @echo off
-chcp 65001 > nul
 cd /d "%~dp0"
 
 echo.
-echo  === git add ===
+echo === git add ===
 git add .
 
 echo.
-echo  === git commit ===
-git commit -m "更新"
+echo === git commit ===
+git commit -m "update"
 
 echo.
-echo  === git push ===
+echo === git push ===
 git push
 
 echo.
-echo エラーがあれば上に表示されています
-echo  完了しました。
 pause
