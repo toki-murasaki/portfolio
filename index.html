@@ -1625,10 +1625,7 @@
         <form action="https://formspree.io/f/xaqkyjbz" method="POST"
               class="form-grid" id="commission-form" novalidate>
             <input type="hidden" name="_subject" value="【ポートフォリオ】依頼フォームからのお問い合わせ">
-            <input type="hidden" name="_captcha" value="true">
-            <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_autoresponse" value="お問い合わせありがとうございます。村咲ときです。内容を確認次第、ご連絡させていただきます。">
-            <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
 
             <!-- エラーサマリー（未入力があるときだけ表示） -->
             <p class="form-summary-error" id="form-summary" role="alert">
@@ -1647,7 +1644,7 @@
 
             <div class="form-group">
                 <label class="form-label" for="f-email">メールアドレス<span class="req">*</span></label>
-                <input type="email" id="f-email" name="メールアドレス" class="form-input"
+                <input type="email" id="f-email" name="email" class="form-input"
                        placeholder="example@email.com" required autocomplete="email">
                 <p class="form-error-msg" aria-live="polite">正しいメールアドレスを入力してください</p>
             </div>
@@ -1973,7 +1970,7 @@ document.addEventListener('keydown', e => {
 
         // AJAX送信
         try {
-            await fetch('https://formsubmit.co/ajax/tok1t0ki@yahoo.co.jp', {
+            await fetch('https://formspree.io/f/xaqkyjbz', {
                 method: 'POST',
                 body: new FormData(this),
                 headers: { 'Accept': 'application/json' }
