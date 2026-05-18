@@ -1623,30 +1623,20 @@
             詳細: https://formspree.io/
         -->
         <form action="https://formspree.io/f/xaqkyjbz" method="POST"
-              class="form-grid" id="commission-form" novalidate>
+              class="form-grid" id="commission-form">
             <input type="hidden" name="_subject" value="【ポートフォリオ】依頼フォームからのお問い合わせ">
             <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
-
-            <!-- エラーサマリー（未入力があるときだけ表示） -->
-            <p class="form-summary-error" id="form-summary" role="alert">
-                ⚠ 未入力の項目があります。赤くハイライトされた項目をご確認ください。
-            </p>
-            <p class="form-success-msg" id="form-success" role="status">
-                ✓ お問い合わせありがとうございます。内容を確認次第ご連絡いたします。
-            </p>
 
             <div class="form-group">
                 <label class="form-label" for="f-name">お名前<span class="req">*</span></label>
                 <input type="text" id="f-name" name="お名前" class="form-input"
                        placeholder="山田 太郎" required autocomplete="name">
-                <p class="form-error-msg" aria-live="polite">お名前を入力してください</p>
             </div>
 
             <div class="form-group">
                 <label class="form-label" for="f-email">メールアドレス<span class="req">*</span></label>
                 <input type="email" id="f-email" name="email" class="form-input"
                        placeholder="example@email.com" required autocomplete="email">
-                <p class="form-error-msg" aria-live="polite">正しいメールアドレスを入力してください</p>
             </div>
 
             <div class="form-group">
@@ -1656,35 +1646,30 @@
                     <option value="企業・法人">企業・法人</option>
                     <option value="個人（現在停止中）">個人（現在停止中）</option>
                 </select>
-                <p class="form-error-msg" aria-live="polite">依頼種別を選択してください</p>
             </div>
 
             <div class="form-group">
                 <label class="form-label" for="f-deadline">希望納期<span class="req">*</span></label>
                 <input type="text" id="f-deadline" name="希望納期" class="form-input"
                        placeholder="例：2025年3月末" required>
-                <p class="form-error-msg" aria-live="polite">希望納期を入力してください</p>
             </div>
 
             <div class="form-group">
                 <label class="form-label" for="f-budget">ご予算<span class="req">*</span></label>
                 <input type="text" id="f-budget" name="ご予算" class="form-input"
                        placeholder="例：3〜5万円" required>
-                <p class="form-error-msg" aria-live="polite">ご予算を入力してください</p>
             </div>
 
             <div class="form-group">
                 <label class="form-label" for="f-media">使用媒体<span class="req">*</span></label>
                 <input type="text" id="f-media" name="使用媒体" class="form-input"
                        placeholder="例：Webサイト用、SNS用、印刷物" required>
-                <p class="form-error-msg" aria-live="polite">使用媒体を入力してください</p>
             </div>
 
             <div class="form-group span2">
                 <label class="form-label" for="f-overview">案件概要<span class="req">*</span></label>
                 <textarea id="f-overview" name="案件概要" class="form-textarea"
                           placeholder="依頼内容の詳細をご記入ください" required></textarea>
-                <p class="form-error-msg" aria-live="polite">案件概要を入力してください</p>
             </div>
 
             <div class="form-group span2">
@@ -1692,7 +1677,6 @@
                 <textarea id="f-ref" name="希望イメージ" class="form-textarea"
                           style="min-height:80px"
                           placeholder="参考となるURLや、雰囲気・スタイルのご要望があればご記入ください"></textarea>
-                <p class="form-error-msg" aria-live="polite">希望イメージ・参考資料を入力してください</p>
             </div>
 
             <div class="form-footer">
@@ -1889,101 +1873,6 @@ function closeLightbox(e) {
 document.addEventListener('keydown', e => {
     if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
 });
-
-// ── Commission form validation & AJAX submit ──
-(function() {
-    const form = document.getElementById('commission-form');
-    if (!form) return;
-
-    const summary    = document.getElementById('form-summary');
-    const successMsg = document.getElementById('form-success');
-    const submitBtn  = form.querySelector('.submit-btn');
-
-    function validateField(field) {
-        const group = field.closest('.form-group');
-        const isEmpty = field.tagName === 'SELECT'
-            ? field.value === ''
-            : field.value.trim() === '';
-        const isBadEmail = field.type === 'email'
-            && field.value.trim() !== ''
-            && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value.trim());
-
-        // required でないフィールドはメール形式エラーのみチェック
-        if (!field.required) {
-            if (isBadEmail) {
-                group.classList.add('has-error');
-                return false;
-            }
-            group.classList.remove('has-error');
-            return true;
-        }
-
-        if (isEmpty || isBadEmail) {
-            group.classList.add('has-error');
-            return false;
-        }
-        group.classList.remove('has-error');
-        return true;
-    }
-
-    // 入力・変更時にリアルタイムでエラーを解除
-    form.querySelectorAll('.form-input, .form-select, .form-textarea').forEach(field => {
-        ['input', 'change'].forEach(ev => {
-            field.addEventListener(ev, () => {
-                validateField(field);
-                if (!form.querySelector('.form-group.has-error')) {
-                    summary.classList.remove('visible');
-                }
-            });
-        });
-    });
-
-    // 送信処理
-    form.addEventListener('submit', async function(e) {
-        e.preventDefault();
-
-        const fields = this.querySelectorAll('.form-input, .form-select, .form-textarea');
-        let allValid = true;
-        let firstErrorGroup = null;
-
-        fields.forEach(field => {
-            const ok = validateField(field);
-            if (!ok && !firstErrorGroup) firstErrorGroup = field.closest('.form-group');
-            if (!ok) allValid = false;
-        });
-
-        // バリデーション失敗
-        if (!allValid) {
-            summary.classList.add('visible');
-            summary.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            if (firstErrorGroup) {
-                const firstField = firstErrorGroup.querySelector('.form-input, .form-select, .form-textarea');
-                if (firstField) setTimeout(() => firstField.focus(), 400);
-            }
-            return;
-        }
-
-        // ボタンを即座に送信済み状態へ
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span>✓</span> 送信完了';
-        summary.classList.remove('visible');
-
-        // AJAX送信
-        try {
-            await fetch('https://formspree.io/f/xaqkyjbz', {
-                method: 'POST',
-                body: new FormData(this),
-                headers: { 'Accept': 'application/json' }
-            });
-        } catch (_) {
-            // ネットワークエラーでも送信済み表示は維持（再送信防止）
-        }
-
-        // 完了メッセージを表示
-        successMsg.classList.add('visible');
-        successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    });
-})();
 
 // ── Intersection Observer (fade-in) ──
 const io = new IntersectionObserver(entries => {
