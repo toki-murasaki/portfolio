@@ -2,7 +2,12 @@
   "permissions": {
     "allow": [
       "PowerShell(New-Item *)",
-      "PowerShell(Get-ChildItem C:\\\\portfolio -Recurse | ForEach-Object { $_.FullName })"
+      "PowerShell(Get-ChildItem C:\\\\portfolio -Recurse | ForEach-Object { $_.FullName })",
+      "Bash(Get-Item \"C:\\\\portfolio\\\\images\\\\meishi.png\")",
+      "Bash(Select-Object Name, Length, Extension)",
+      "PowerShell(Get-Item *)",
+      "PowerShell(Add-Type -AssemblyName System.Drawing; $img = [System.Drawing.Image]::FromFile\\(\"C:\\\\portfolio\\\\images\\\\meishi.png\"\\); \"Width: $\\($img.Width\\), Height: $\\($img.Height\\), Format: $\\($img.RawFormat\\)\"; $img.Dispose\\(\\))",
+      "PowerShell($bytes = [System.IO.File]::ReadAllBytes\\(\"C:\\\\portfolio\\\\images\\\\meishi.png\"\\) | Select-Object -First 8; $bytes | ForEach-Object { \"{0:X2}\" -f $_ })"
     ]
   }
 }

@@ -15,5 +15,6 @@ echo  === git push ===
 git push
 
 echo.
+echo エラーがあれば上に表示されています
 echo  完了しました。
 pause
