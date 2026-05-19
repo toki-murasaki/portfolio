@@ -510,6 +510,7 @@
         .support-main-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
+            grid-template-rows: 240px 240px;
             gap: 14px;
         }
         .snews-slot { display: flex; }
@@ -658,15 +659,36 @@
         .snews-card-fantia:hover { border-color: #d4789a; }
         .snews-thumb {
             width: 100%;
-            flex: 1;
-            min-height: 80px;
+            height: 155px;
+            flex-shrink: 0;
             object-fit: cover;
             display: block;
         }
         .snews-body {
-            padding: 10px 14px 14px;
-            flex-shrink: 0;
+            flex: 1;
+            padding: 8px 12px 10px;
             border-top: 1px solid var(--border);
+            overflow: hidden;
+        }
+        .snews-badge {
+            display: inline-flex;
+            align-items: center;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            padding: 1px 7px;
+            border-radius: 3px;
+            margin-bottom: 5px;
+        }
+        .snews-card-fanbox .snews-badge {
+            background: rgba(110,198,232,0.14);
+            color: var(--accent-t);
+            border: 1px solid rgba(110,198,232,0.32);
+        }
+        .snews-card-fantia .snews-badge {
+            background: rgba(212,120,154,0.12);
+            color: #b0446a;
+            border: 1px solid rgba(212,120,154,0.32);
         }
         .snews-label {
             font-family: var(--en);
@@ -674,7 +696,7 @@
             font-weight: 700;
             letter-spacing: 0.18em;
             text-transform: uppercase;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
         .snews-card-fanbox .snews-label { color: var(--accent-t); }
         .snews-card-fantia .snews-label { color: #b0446a; }
@@ -682,7 +704,7 @@
             font-size: 12px;
             font-weight: 500;
             color: var(--text);
-            line-height: 1.45;
+            line-height: 1.4;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
@@ -2050,6 +2072,7 @@ document.querySelectorAll('img').forEach(img => {
             a.innerHTML =
                 `<img class="snews-thumb" src="${data.thumb}" alt="${data.title}">` +
                 `<div class="snews-body">` +
+                  `<span class="snews-badge">最新記事</span>` +
                   `<p class="snews-label">${src.label}</p>` +
                   `<p class="snews-title">${data.title}</p>` +
                 `</div>`;
