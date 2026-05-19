@@ -380,11 +380,11 @@
         }
 
         /* ─── About ─── */
-        #about { background: var(--bg3); }
+        #about { background: var(--bg3); padding-top: 44px; padding-bottom: 44px; }
         .about-grid {
             display: grid;
-            grid-template-columns: 0.65fr 1.3fr;
-            gap: 56px;
+            grid-template-columns: 0.45fr 1.3fr;
+            gap: 36px;
             align-items: center;
         }
         .about-img-wrap { position: relative; }
@@ -422,18 +422,18 @@
         }
         .about-text h3 {
             font-family: var(--mincho);
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 500;
             color: var(--text);
-            margin-bottom: 20px;
+            margin-bottom: 12px;
         }
         .about-text p {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text2);
-            line-height: 2.1;
-            margin-bottom: 14px;
+            line-height: 1.85;
+            margin-bottom: 8px;
         }
-        .about-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 22px; }
+        .about-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
         .tag {
             padding: 5px 13px;
             border: 1px solid var(--border2);
@@ -584,28 +584,28 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 1px;
         }
         .support-items li {
             font-size: 12px;
             color: var(--text2);
-            padding-left: 14px;
+            padding-left: 13px;
             position: relative;
-            line-height: 1.5;
+            line-height: 1.35;
         }
         .support-card-fanbox .support-items li::before {
             content: '';
             position: absolute;
-            left: 3px; top: 8px;
-            width: 5px; height: 5px;
+            left: 2px; top: 5px;
+            width: 4px; height: 4px;
             border-radius: 50%;
             background: var(--accent);
         }
         .support-card-fantia .support-items li::before {
             content: '';
             position: absolute;
-            left: 3px; top: 8px;
-            width: 5px; height: 5px;
+            left: 2px; top: 5px;
+            width: 4px; height: 4px;
             border-radius: 50%;
             background: #d4789a;
         }
@@ -618,7 +618,7 @@
             font-weight: 700;
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            margin-top: 2px;
+            margin-top: 0;
             transition: gap 0.25s;
         }
         .support-card-fanbox .support-cta { color: var(--accent-t); }
