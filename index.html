@@ -657,12 +657,32 @@
         .snews-card-fantia:hover { border-color: #d4789a; }
         .snews-thumb {
             width: 100%;
-            aspect-ratio: 16/9;
+            height: 160px;
             object-fit: cover;
             display: block;
         }
         .snews-body {
-            padding: 16px 18px 18px;
+            padding: 12px 16px 16px;
+        }
+        .snews-section-badge {
+            display: inline-flex;
+            align-items: center;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            padding: 2px 8px;
+            border-radius: 3px;
+            margin-bottom: 10px;
+        }
+        .snews-card-fanbox .snews-section-badge {
+            background: rgba(110,198,232,0.14);
+            color: var(--accent-t);
+            border: 1px solid rgba(110,198,232,0.32);
+        }
+        .snews-card-fantia .snews-section-badge {
+            background: rgba(212,120,154,0.12);
+            color: #b0446a;
+            border: 1px solid rgba(212,120,154,0.32);
         }
         .snews-label {
             font-family: var(--en);
@@ -670,15 +690,15 @@
             font-weight: 700;
             letter-spacing: 0.18em;
             text-transform: uppercase;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         .snews-card-fanbox .snews-label { color: var(--accent-t); }
         .snews-card-fantia .snews-label { color: #b0446a; }
         .snews-title {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
             color: var(--text);
-            line-height: 1.55;
+            line-height: 1.5;
         }
         .snews-sub-hd {
             margin: 48px 0 24px;
@@ -2042,6 +2062,7 @@ document.querySelectorAll('img').forEach(img => {
             a.innerHTML =
                 `<img class="snews-thumb" src="${data.thumb}" alt="${data.title}">` +
                 `<div class="snews-body">` +
+                  `<span class="snews-section-badge">最新記事</span>` +
                   `<p class="snews-label">${src.label}</p>` +
                   `<p class="snews-title">${data.title}</p>` +
                 `</div>`;
