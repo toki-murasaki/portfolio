@@ -626,7 +626,6 @@
         .support-card:hover .support-cta { gap: 10px; }
 
         /* ─── Support News Section ─── */
-        #support-news { background: var(--bg3); }
         .snews-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -681,6 +680,33 @@
             font-weight: 500;
             color: var(--text);
             line-height: 1.55;
+        }
+        .snews-sub-hd {
+            margin: 48px 0 24px;
+        }
+        .snews-sub-label {
+            font-family: var(--en);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--accent-t);
+            margin-bottom: 10px;
+        }
+        .snews-sub-title {
+            font-family: var(--en);
+            font-size: clamp(22px, 3vw, 32px);
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.02em;
+        }
+        .snews-sub-title-ja {
+            font-family: var(--mincho);
+            font-size: 13px;
+            font-weight: 300;
+            color: var(--text3);
+            letter-spacing: 0.1em;
+            margin-top: 4px;
         }
 
         /* ─── VTuber Credits ─── */
@@ -1299,7 +1325,7 @@
 
             /* ショップ */
             .shop-grid { grid-template-columns: 1fr; }
-            .shop-card { padding: 24px 20px; }
+            .shop-card { padding: 12px 14px; }
 
             /* フォーム */
             .form-grid { grid-template-columns: 1fr; gap: 16px; }
@@ -1515,20 +1541,14 @@
                 <span class="support-cta">Fantiaで支援する <span>→</span></span>
             </a>
         </div>
-    </div>
-</section>
-
-<!-- ══════════════════════════════════════════
-     SUPPORT NEWS
-══════════════════════════════════════════ -->
-<section class="sec" id="support-news">
-    <div class="sec-inner">
-        <div class="sec-hd">
-            <p class="sec-label">Latest Posts</p>
-            <h2 class="sec-title">支援サイト最新情報</h2>
-            <p class="sec-title-ja">最新記事</p>
+        <div id="snews-wrap">
+            <div class="snews-sub-hd">
+                <p class="snews-sub-label">Latest Posts</p>
+                <h3 class="snews-sub-title">支援サイト最新情報</h3>
+                <p class="snews-sub-title-ja">最新記事</p>
+            </div>
+            <div class="snews-grid" id="snews-grid"></div>
         </div>
-        <div class="snews-grid" id="snews-grid"></div>
     </div>
 </section>
 
@@ -2039,7 +2059,7 @@ document.querySelectorAll('img').forEach(img => {
     }
 
     if (grid.children.length === 0) {
-        document.getElementById('support-news').style.display = 'none';
+        document.getElementById('snews-wrap').style.display = 'none';
     }
 })();
 </script>
