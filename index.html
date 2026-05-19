@@ -507,11 +507,15 @@
 
         /* ─── Support Section ─── */
         #support { background: var(--bg2); }
-        .support-grid {
+        .support-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 14px;
+            align-items: stretch;
         }
+        .support-row + .support-row { margin-top: 14px; }
+        .snews-slot { display: flex; }
+        .snews-slot .snews-card { flex: 1; }
         .support-card {
             display: flex;
             flex-direction: column;
@@ -626,11 +630,6 @@
         .support-card:hover .support-cta { gap: 10px; }
 
         /* ─── Support News Section ─── */
-        .snews-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 22px;
-        }
         .snews-card {
             border: 1px solid var(--border);
             border-radius: 6px;
@@ -1309,10 +1308,7 @@
             .oc-desc { font-size: 14px; }
 
             /* Support */
-            .support-grid { grid-template-columns: 1fr; }
-
-            /* Support News */
-            .snews-grid { grid-template-columns: 1fr; }
+            .support-row { grid-template-columns: 1fr; }
 
             /* VTuber */
             .vtuber-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
@@ -1508,8 +1504,8 @@
             <h2 class="sec-title">活動を応援する</h2>
             <p class="sec-title-ja">支援サイト</p>
         </div>
-        <!-- ここを編集: 支援サイトの説明文・リストを変更できます -->
-        <div class="support-grid">
+        <!-- FANBOX 行 -->
+        <div class="support-row">
             <a href="https://toki-murasaki.fanbox.cc/" target="_blank" rel="noopener" class="support-card support-card-fanbox">
                 <div class="support-card-head">
                     <img src="images/fanbox.png" alt="pixivFANBOX" class="support-logo">
@@ -1525,6 +1521,10 @@
                 </ul>
                 <span class="support-cta">FANBOXで支援する <span>→</span></span>
             </a>
+            <div class="snews-slot" id="snews-fanbox"></div>
+        </div>
+        <!-- Fantia 行 -->
+        <div class="support-row">
             <a href="https://fantia.jp/fanclubs/550353" target="_blank" rel="noopener" class="support-card support-card-fantia">
                 <div class="support-card-head">
                     <img src="images/fantia.png" alt="Fantia" class="support-logo">
@@ -1540,14 +1540,7 @@
                 </ul>
                 <span class="support-cta">Fantiaで支援する <span>→</span></span>
             </a>
-        </div>
-        <div id="snews-wrap">
-            <div class="snews-sub-hd">
-                <p class="snews-sub-label">Latest Posts</p>
-                <h3 class="snews-sub-title">支援サイト最新情報</h3>
-                <p class="snews-sub-title-ja">最新記事</p>
-            </div>
-            <div class="snews-grid" id="snews-grid"></div>
+            <div class="snews-slot" id="snews-fantia"></div>
         </div>
     </div>
 </section>
@@ -2031,10 +2024,10 @@ document.querySelectorAll('img').forEach(img => {
         { id: 'fanbox', label: 'pixivFANBOX', json: 'data/fanbox.json' },
         { id: 'fantia', label: 'Fantia',       json: 'data/fantia.json' },
     ];
-    const grid = document.getElementById('snews-grid');
-    if (!grid) return;
 
     for (const src of sources) {
+        const slot = document.getElementById(`snews-${src.id}`);
+        if (!slot) continue;
         try {
             const res = await fetch(src.json);
             if (!res.ok) throw new Error();
@@ -2052,14 +2045,10 @@ document.querySelectorAll('img').forEach(img => {
                   `<p class="snews-label">${src.label}</p>` +
                   `<p class="snews-title">${data.title}</p>` +
                 `</div>`;
-            grid.appendChild(a);
+            slot.appendChild(a);
         } catch (_) {
-            // 読み込み失敗時はカードを非表示
+            slot.style.display = 'none';
         }
-    }
-
-    if (grid.children.length === 0) {
-        document.getElementById('snews-wrap').style.display = 'none';
     }
 })();
 </script>
