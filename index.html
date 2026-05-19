@@ -507,13 +507,11 @@
 
         /* ─── Support Section ─── */
         #support { background: var(--bg2); }
-        .support-row {
+        .support-main-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 14px;
-            align-items: stretch;
         }
-        .support-row + .support-row { margin-top: 14px; }
         .snews-slot { display: flex; }
         .snews-slot .snews-card { flex: 1; }
         .support-card {
@@ -629,64 +627,46 @@
         .support-card-fantia .support-cta { color: #b0446a; }
         .support-card:hover .support-cta { gap: 10px; }
 
-        /* ─── Support News Section ─── */
+        /* ─── 最新記事カード ─── */
         .snews-card {
-            border: 1px solid var(--border);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
             border-radius: 6px;
+            border: 1px solid var(--border);
+            background: var(--bg3);
             overflow: hidden;
-            background: var(--bg4);
             text-decoration: none;
             color: inherit;
             transition: all 0.28s;
             position: relative;
-            display: flex;
-            flex-direction: column;
         }
         .snews-card::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0;
             height: 3px;
+            z-index: 1;
         }
         .snews-card-fanbox::before { background: var(--accent); }
         .snews-card-fantia::before { background: #d4789a; }
         .snews-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 28px rgba(0,0,0,0.09);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 22px rgba(0,0,0,0.08);
         }
         .snews-card-fanbox:hover { border-color: var(--accent); }
         .snews-card-fantia:hover { border-color: #d4789a; }
         .snews-thumb {
             width: 100%;
             flex: 1;
-            min-height: 0;
-            object-fit: contain;
-            background: var(--bg2);
+            min-height: 80px;
+            object-fit: cover;
             display: block;
         }
         .snews-body {
-            padding: 12px 16px 16px;
+            padding: 10px 14px 14px;
             flex-shrink: 0;
-        }
-        .snews-section-badge {
-            display: inline-flex;
-            align-items: center;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.06em;
-            padding: 2px 8px;
-            border-radius: 3px;
-            margin-bottom: 10px;
-        }
-        .snews-card-fanbox .snews-section-badge {
-            background: rgba(110,198,232,0.14);
-            color: var(--accent-t);
-            border: 1px solid rgba(110,198,232,0.32);
-        }
-        .snews-card-fantia .snews-section-badge {
-            background: rgba(212,120,154,0.12);
-            color: #b0446a;
-            border: 1px solid rgba(212,120,154,0.32);
+            border-top: 1px solid var(--border);
         }
         .snews-label {
             font-family: var(--en);
@@ -694,15 +674,19 @@
             font-weight: 700;
             letter-spacing: 0.18em;
             text-transform: uppercase;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
         .snews-card-fanbox .snews-label { color: var(--accent-t); }
         .snews-card-fantia .snews-label { color: #b0446a; }
         .snews-title {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 500;
             color: var(--text);
-            line-height: 1.5;
+            line-height: 1.45;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
         .snews-sub-hd {
             margin: 48px 0 24px;
@@ -1332,7 +1316,7 @@
             .oc-desc { font-size: 14px; }
 
             /* Support */
-            .support-row { grid-template-columns: 1fr; }
+            .support-main-grid { grid-template-columns: 1fr; }
 
             /* VTuber */
             .vtuber-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
@@ -1528,8 +1512,8 @@
             <h2 class="sec-title">活動を応援する</h2>
             <p class="sec-title-ja">支援サイト</p>
         </div>
-        <!-- FANBOX 行 -->
-        <div class="support-row">
+        <div class="support-main-grid">
+            <!-- FANBOX 説明 -->
             <a href="https://toki-murasaki.fanbox.cc/" target="_blank" rel="noopener" class="support-card support-card-fanbox">
                 <div class="support-card-head">
                     <img src="images/fanbox.png" alt="pixivFANBOX" class="support-logo">
@@ -1545,10 +1529,9 @@
                 </ul>
                 <span class="support-cta">FANBOXで支援する <span>→</span></span>
             </a>
+            <!-- FANBOX 最新記事 -->
             <div class="snews-slot" id="snews-fanbox"></div>
-        </div>
-        <!-- Fantia 行 -->
-        <div class="support-row">
+            <!-- Fantia 説明 -->
             <a href="https://fantia.jp/fanclubs/550353" target="_blank" rel="noopener" class="support-card support-card-fantia">
                 <div class="support-card-head">
                     <img src="images/fantia.png" alt="Fantia" class="support-logo">
@@ -1564,6 +1547,7 @@
                 </ul>
                 <span class="support-cta">Fantiaで支援する <span>→</span></span>
             </a>
+            <!-- Fantia 最新記事 -->
             <div class="snews-slot" id="snews-fantia"></div>
         </div>
     </div>
@@ -2066,7 +2050,6 @@ document.querySelectorAll('img').forEach(img => {
             a.innerHTML =
                 `<img class="snews-thumb" src="${data.thumb}" alt="${data.title}">` +
                 `<div class="snews-body">` +
-                  `<span class="snews-section-badge">最新記事</span>` +
                   `<p class="snews-label">${src.label}</p>` +
                   `<p class="snews-title">${data.title}</p>` +
                 `</div>`;
