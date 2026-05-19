@@ -625,6 +625,64 @@
         .support-card-fantia .support-cta { color: #b0446a; }
         .support-card:hover .support-cta { gap: 10px; }
 
+        /* ─── Support News Section ─── */
+        #support-news { background: var(--bg3); }
+        .snews-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+        .snews-card {
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+            background: var(--bg4);
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.28s;
+            position: relative;
+            display: block;
+        }
+        .snews-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+        }
+        .snews-card-fanbox::before { background: var(--accent); }
+        .snews-card-fantia::before { background: #d4789a; }
+        .snews-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 28px rgba(0,0,0,0.09);
+        }
+        .snews-card-fanbox:hover { border-color: var(--accent); }
+        .snews-card-fantia:hover { border-color: #d4789a; }
+        .snews-thumb {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            display: block;
+        }
+        .snews-body {
+            padding: 16px 18px 18px;
+        }
+        .snews-label {
+            font-family: var(--en);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .snews-card-fanbox .snews-label { color: var(--accent-t); }
+        .snews-card-fantia .snews-label { color: #b0446a; }
+        .snews-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.55;
+        }
+
         /* ─── VTuber Credits ─── */
         #credits { background: var(--bg3); }
         .vtuber-intro {
@@ -1227,6 +1285,9 @@
             /* Support */
             .support-grid { grid-template-columns: 1fr; }
 
+            /* Support News */
+            .snews-grid { grid-template-columns: 1fr; }
+
             /* VTuber */
             .vtuber-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
             .vtuber-avatar { width: 64px; height: 64px; }
@@ -1454,6 +1515,20 @@
                 <span class="support-cta">Fantiaで支援する <span>→</span></span>
             </a>
         </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SUPPORT NEWS
+══════════════════════════════════════════ -->
+<section class="sec" id="support-news">
+    <div class="sec-inner">
+        <div class="sec-hd">
+            <p class="sec-label">Latest Posts</p>
+            <h2 class="sec-title">支援サイト最新情報</h2>
+            <p class="sec-title-ja">最新記事</p>
+        </div>
+        <div class="snews-grid" id="snews-grid"></div>
     </div>
 </section>
 
@@ -1929,6 +2004,44 @@ document.querySelectorAll('img').forEach(img => {
     img.addEventListener('contextmenu', e => e.preventDefault());
     img.setAttribute('draggable', 'false');
 });
+
+// ── 支援サイト最新情報 ──
+(async function loadSupportNews() {
+    const sources = [
+        { id: 'fanbox', label: 'pixivFANBOX', json: 'data/fanbox.json' },
+        { id: 'fantia', label: 'Fantia',       json: 'data/fantia.json' },
+    ];
+    const grid = document.getElementById('snews-grid');
+    if (!grid) return;
+
+    for (const src of sources) {
+        try {
+            const res = await fetch(src.json);
+            if (!res.ok) throw new Error();
+            const data = await res.json();
+            if (!data.title || !data.url) throw new Error();
+
+            const a = document.createElement('a');
+            a.href = data.url;
+            a.target = '_blank';
+            a.rel = 'noopener';
+            a.className = `snews-card snews-card-${src.id}`;
+            a.innerHTML =
+                `<img class="snews-thumb" src="${data.thumb}" alt="${data.title}">` +
+                `<div class="snews-body">` +
+                  `<p class="snews-label">${src.label}</p>` +
+                  `<p class="snews-title">${data.title}</p>` +
+                `</div>`;
+            grid.appendChild(a);
+        } catch (_) {
+            // 読み込み失敗時はカードを非表示
+        }
+    }
+
+    if (grid.children.length === 0) {
+        document.getElementById('support-news').style.display = 'none';
+    }
+})();
 </script>
 
 </body>
