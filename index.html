@@ -1957,7 +1957,7 @@ window.addEventListener('scroll', () => {
     const grid    = document.getElementById('gallery-grid');
     let galleryImages;
     try {
-        const res = await fetch('data/gallery.json');
+        const res = await fetch('./data/gallery.json');
         if (!res.ok) throw new Error();
         galleryImages = await res.json();
         if (!Array.isArray(galleryImages) || galleryImages.length === 0) throw new Error();
