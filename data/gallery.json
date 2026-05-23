@@ -1,23 +1,8 @@
 [
   {
-    "src": "images/work01.jpg",
-    "title": "Project Nebula様｜キービジュアル",
+    "src": "images/work06.jpg",
+    "title": "小学館コロコロコミック様｜黄泉ハルカ様生誕記念イラスト",
     "position": "50% 50%"
-  },
-  {
-    "src": "images/work02.jpg",
-    "title": "桃瀬にな様｜歌ってみた用イラスト",
-    "position": "50% 50%"
-  },
-  {
-    "src": "images/work03.jpg",
-    "title": "Project Nebula様｜歌ってみた用イラスト",
-    "position": "49% 49%"
-  },
-  {
-    "src": "images/work04.jpg",
-    "title": "お誕生日応援広告用イラスト",
-    "position": "33% 50%"
   },
   {
     "src": "images/work05.jpg",
@@ -25,9 +10,19 @@
     "position": "50% 50%"
   },
   {
-    "src": "images/work06.jpg",
-    "title": "小学館コロコロコミック様｜黄泉ハルカ様生誕記念イラスト",
+    "src": "images/work04.jpg",
+    "title": "お誕生日応援広告用イラスト",
+    "position": "33% 50%"
+  },
+  {
+    "src": "images/work01.jpg",
+    "title": "Project Nebula様｜キービジュアル",
     "position": "50% 50%"
+  },
+  {
+    "src": "images/work08.png",
+    "title": "株式会社しまリス堂様｜汐空なみり様コラボマウスパッド用イラスト2点",
+    "position": "24% 50%"
   },
   {
     "src": "images/work07.png",
@@ -35,8 +30,13 @@
     "position": "28% 50%"
   },
   {
-    "src": "images/work08.png",
-    "title": "株式会社しまリス堂様｜汐空なみり様コラボマウスパッド用イラスト2点",
-    "position": "24% 50%"
+    "src": "images/work03.jpg",
+    "title": "Project Nebula様｜歌ってみた用イラスト",
+    "position": "49% 49%"
+  },
+  {
+    "src": "images/work02.jpg",
+    "title": "桃瀬にな様｜歌ってみた用イラスト",
+    "position": "50% 50%"
   }
 ]
