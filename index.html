@@ -1966,7 +1966,7 @@ window.addEventListener('scroll', () => {
         return;
     }
 
-    galleryImages.forEach(item => {
+    galleryImages.filter(item => item.src && item.title !== '未設定').forEach(item => {
         const wrap = document.createElement('div');
         wrap.className = 'gallery-item';
 
