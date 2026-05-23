@@ -1977,7 +1977,7 @@ window.addEventListener('scroll', () => {
         img.src     = item.src;
         img.alt     = item.title;
         img.loading = 'lazy';
-        if (item.position) img.style.objectPosition = item.position;
+        img.style.objectPosition = item.position || '50% 50%';
 
         const overlay = document.createElement('div');
         overlay.className = 'gallery-overlay';
