@@ -1744,10 +1744,7 @@
             <h2 class="sec-title">Gallery</h2>
             <p class="sec-title-ja">案件作品</p>
         </div>
-        <div class="gallery-grid" id="gallery-grid">
-            <!-- JS でレンダリングします。images/work01.jpg〜work06.jpg を配置してください -->
-        </div>
-        <!-- 更新方法メモ: images/フォルダに work01.jpg〜work05.jpg を配置。追加はJSのgalleryImages配列に行を足す -->
+        <div class="gallery-grid" id="gallery-grid"></div>
         <div class="gallery-pixiv">
             <a href="https://www.pixiv.net/users/14380777" target="_blank" rel="noopener" class="gallery-pixiv-btn">
                 <img src="images/pixiv.png" alt="pixiv">
@@ -1955,75 +1952,71 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 // ── Gallery ──
-// =====================================================
-// ここを編集: ギャラリーの作品情報
-// 各行の title（作品タイトル）と comment（コメント）を書き換えてください。
-// 作品を追加する場合は行ごとコピーして増やせます。
-// src は images/ フォルダの画像ファイル名です。
-// =====================================================
-const galleryImages = [
-    { src: 'images/work01.jpg', title: 'Project Nebula様｜キービジュアル', comment: '' },
-    { src: 'images/work02.jpg', title: '桃瀬にな様｜歌ってみた用イラスト', comment: '' },
-    { src: 'images/work03.jpg', title: 'Project Nebula様｜歌ってみた用イラスト', comment: '' },
-    { src: 'images/work04.jpg', title: 'お誕生日応援広告用イラスト', comment: '' },
-    { src: 'images/work05.jpg', title: '【すぺしゃりて】孫守まごも様｜誕生日記念イラスト', comment: '' },
-    // ここを編集: 6枚目を追加する場合はこの行を編集してください
-    // { src: 'images/work06.jpg', title: 'タイトル', comment: 'コメント' },
-];
+(async () => {
+    const section = document.getElementById('gallery');
+    const grid    = document.getElementById('gallery-grid');
+    let galleryImages;
+    try {
+        const res = await fetch('data/gallery.json');
+        if (!res.ok) throw new Error();
+        galleryImages = await res.json();
+        if (!Array.isArray(galleryImages) || galleryImages.length === 0) throw new Error();
+    } catch {
+        section.style.display = 'none';
+        return;
+    }
 
-const grid = document.getElementById('gallery-grid');
-galleryImages.forEach(item => {
-    const wrap = document.createElement('div');
-    wrap.className = 'gallery-item';
+    galleryImages.forEach(item => {
+        const wrap = document.createElement('div');
+        wrap.className = 'gallery-item';
 
-    // 画像エリア
-    const imgWrap = document.createElement('div');
-    imgWrap.className = 'gallery-img-wrap';
+        const imgWrap = document.createElement('div');
+        imgWrap.className = 'gallery-img-wrap';
 
-    const img = document.createElement('img');
-    img.src = item.src;
-    img.alt = item.title;
-    img.loading = 'lazy';
+        const img = document.createElement('img');
+        img.src     = item.src;
+        img.alt     = item.title;
+        img.loading = 'lazy';
 
-    const overlay = document.createElement('div');
-    overlay.className = 'gallery-overlay';
-    overlay.innerHTML = '<div class="gallery-overlay-icon">⊕</div>';
+        const overlay = document.createElement('div');
+        overlay.className = 'gallery-overlay';
+        overlay.innerHTML = '<div class="gallery-overlay-icon">⊕</div>';
 
-    imgWrap.appendChild(img);
-    imgWrap.appendChild(overlay);
+        imgWrap.appendChild(img);
+        imgWrap.appendChild(overlay);
 
-    // キャプションエリア
-    const caption = document.createElement('div');
-    caption.className = 'gallery-caption';
-    caption.innerHTML = `
-        <div class="gallery-caption-title">${item.title}</div>
-        <div class="gallery-caption-comment">${item.comment || ''}</div>
-    `;
-
-    img.onerror = () => {
-        imgWrap.innerHTML = `
-            <div class="gallery-ph">
-                <div class="gallery-ph-icon">🖼</div>
-                <span>${item.src.split('/').pop()}</span>
-                <span style="font-size:10px;color:var(--text3)">未設定</span>
-            </div>
+        const caption = document.createElement('div');
+        caption.className = 'gallery-caption';
+        caption.innerHTML = `
+            <div class="gallery-caption-title">${item.title}</div>
+            <div class="gallery-caption-comment">${item.comment || ''}</div>
         `;
-    };
 
-    wrap.addEventListener('click', () => {
-        if (img.complete && img.naturalWidth > 0) {
-            document.getElementById('lb-img').src = img.src;
-            document.getElementById('lb-img').alt = item.title;
-            document.getElementById('lb-title').textContent = item.title;
-            document.getElementById('lb-comment').textContent = item.comment || '';
-            document.getElementById('lightbox').classList.add('open');
-        }
+        img.onerror = () => {
+            imgWrap.innerHTML = `
+                <div class="gallery-ph">
+                    <div class="gallery-ph-icon">🖼</div>
+                    <span>${item.src.split('/').pop()}</span>
+                    <span style="font-size:10px;color:var(--text3)">未設定</span>
+                </div>
+            `;
+        };
+
+        wrap.addEventListener('click', () => {
+            if (img.complete && img.naturalWidth > 0) {
+                document.getElementById('lb-img').src         = img.src;
+                document.getElementById('lb-img').alt         = item.title;
+                document.getElementById('lb-title').textContent   = item.title;
+                document.getElementById('lb-comment').textContent = item.comment || '';
+                document.getElementById('lightbox').classList.add('open');
+            }
+        });
+
+        wrap.appendChild(imgWrap);
+        wrap.appendChild(caption);
+        grid.appendChild(wrap);
     });
-
-    wrap.appendChild(imgWrap);
-    wrap.appendChild(caption);
-    grid.appendChild(wrap);
-});
+})();
 
 // ── Lightbox ──
 function closeLightbox(e) {
