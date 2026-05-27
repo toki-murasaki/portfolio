@@ -2080,9 +2080,12 @@ document.querySelectorAll('img').forEach(img => {
             if (!data.title || !data.url) throw new Error();
 
             // date フィールドが今日から 0〜3 日以内なら NEW 表示
+            // "YYYY-MM-DD" を UTC ではなくローカル時刻で解釈して比較
             const isNew = (() => {
                 if (!data.date) return false;
-                const postDate = new Date(data.date);
+                const parts = data.date.split('-').map(Number);
+                if (parts.length !== 3) return false;
+                const postDate = new Date(parts[0], parts[1] - 1, parts[2]);
                 if (isNaN(postDate.getTime())) return false;
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
