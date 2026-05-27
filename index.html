@@ -1288,11 +1288,17 @@
             0%, 100% { opacity: 1; }
             50%       { opacity: 0.35; }
         }
+        @keyframes aurora-flow {
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
         .snews-new-badge {
             position: absolute;
             top: 8px;
             left: 8px;
-            background: #e53935;
+            background: linear-gradient(135deg, #a855f7, #22d3ee, #ec4899, #a855f7);
+            background-size: 300% 300%;
             color: #fff;
             font-family: var(--en);
             font-size: 10px;
@@ -1301,7 +1307,7 @@
             padding: 2px 8px;
             border-radius: 20px;
             z-index: 2;
-            animation: new-blink 1.4s ease-in-out infinite;
+            animation: aurora-flow 3s ease infinite, new-blink 1.4s ease-in-out infinite;
             pointer-events: none;
         }
 
