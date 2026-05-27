@@ -1283,6 +1283,28 @@
         #scroll-top.vis { opacity: 1; pointer-events: auto; }
         #scroll-top:hover { border-color: var(--accent-t); color: var(--accent-t); }
 
+        /* ─── NEW バッジ ─── */
+        @keyframes new-blink {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0.35; }
+        }
+        .snews-new-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #e53935;
+            color: #fff;
+            font-family: var(--en);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            padding: 2px 8px;
+            border-radius: 20px;
+            z-index: 2;
+            animation: new-blink 1.4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
         /* ─── Fade-in Animation ─── */
         .fade { opacity: 0; transform: translateY(16px); transition: opacity 0.55s ease, transform 0.55s ease; }
         .fade.in { opacity: 1; transform: translateY(0); }
@@ -2057,6 +2079,17 @@ document.querySelectorAll('img').forEach(img => {
             const data = await res.json();
             if (!data.title || !data.url) throw new Error();
 
+            // date フィールドが今日から 0〜3 日以内なら NEW 表示
+            const isNew = (() => {
+                if (!data.date) return false;
+                const postDate = new Date(data.date);
+                if (isNaN(postDate.getTime())) return false;
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const diffDays = Math.floor((today - postDate) / 86400000);
+                return diffDays >= 0 && diffDays <= 3;
+            })();
+
             const a = document.createElement('a');
             a.href = data.url;
             a.target = '_blank';
@@ -2068,7 +2101,8 @@ document.querySelectorAll('img').forEach(img => {
                   `<span class="snews-badge">最新記事</span>` +
                   `<p class="snews-label">${src.label}</p>` +
                   `<p class="snews-title">${data.title}</p>` +
-                `</div>`;
+                `</div>` +
+                (isNew ? `<span class="snews-new-badge">NEW</span>` : '');
             slot.appendChild(a);
         } catch (_) {
             slot.style.display = 'none';
