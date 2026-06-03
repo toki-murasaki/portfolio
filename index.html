@@ -1321,9 +1321,12 @@
             max-height: 400px;
             overflow-y: auto;
             overscroll-behavior: contain;
-            padding-right: 6px;
+            padding: 0 14px 0 20px;
             scrollbar-width: thin;
             scrollbar-color: var(--border2) transparent;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg3);
         }
         .updates-list::-webkit-scrollbar { width: 4px; }
         .updates-list::-webkit-scrollbar-track { background: transparent; }
@@ -1358,7 +1361,7 @@
             height: 9px;
             border-radius: 50%;
             background: var(--accent);
-            border: 2px solid var(--bg4);
+            border: 2px solid var(--bg3);
             box-shadow: 0 0 0 1px var(--accent);
         }
         .update-date {
