@@ -1,7 +1,10 @@
 {
-  "date": "",
-  "weekday": "",
-  "name": "",
-  "venue": "",
-  "images": []
+  "date": "2026-06-07",
+  "weekday": "日",
+  "name": "コミティア156",
+  "venue": "東京ビッグサイト",
+  "images": [
+    "https://toki-murasaki.github.io/portfolio/images/event-oshinagaki1.jpg",
+    "https://toki-murasaki.github.io/portfolio/images/event-oshinagaki2.jpg"
+  ]
 }
