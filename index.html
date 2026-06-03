@@ -1311,6 +1311,98 @@
             pointer-events: none;
         }
 
+        /* ─── Updates Section ─── */
+        #updates { background: var(--bg4); }
+        .updates-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            position: relative;
+        }
+        .updates-list::before {
+            content: '';
+            position: absolute;
+            left: 88px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+            opacity: 0.4;
+        }
+        .update-item {
+            display: grid;
+            grid-template-columns: 88px 1fr;
+            gap: 0 24px;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border);
+            align-items: baseline;
+            position: relative;
+        }
+        .update-item:last-child { border-bottom: none; }
+        .update-item::after {
+            content: '';
+            position: absolute;
+            left: 84px;
+            top: 22px;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 2px solid var(--bg4);
+            box-shadow: 0 0 0 1px var(--accent);
+        }
+        .update-date {
+            font-family: var(--en);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text3);
+            letter-spacing: 0.04em;
+            text-align: right;
+            padding-right: 8px;
+            padding-top: 2px;
+            white-space: nowrap;
+        }
+        .update-body {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .update-text {
+            font-size: 13px;
+            color: var(--text2);
+            line-height: 1.7;
+        }
+        .update-new-badge {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(135deg, #a855f7, #22d3ee, #ec4899, #a855f7);
+            background-size: 300% 300%;
+            color: #fff;
+            font-family: var(--en);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            padding: 2px 8px;
+            border-radius: 20px;
+            flex-shrink: 0;
+            animation: aurora-flow 3s ease infinite, new-blink 1.4s ease-in-out infinite;
+        }
+
+        @media (max-width: 640px) {
+            .updates-list::before { left: 72px; }
+            .update-item { grid-template-columns: 72px 1fr; gap: 0 16px; }
+            .update-item::after { left: 68px; }
+            .update-date { font-size: 10px; }
+            .update-text { font-size: 13px; }
+        }
+        @media (max-width: 380px) {
+            .updates-list::before { display: none; }
+            .update-item { grid-template-columns: 1fr; gap: 4px 0; padding: 14px 0; }
+            .update-item::after { display: none; }
+            .update-date { text-align: left; padding-right: 0; }
+        }
+
         /* ─── Fade-in Animation ─── */
         .fade { opacity: 0; transform: translateY(16px); transition: opacity 0.55s ease, transform 0.55s ease; }
         .fade.in { opacity: 1; transform: translateY(0); }
@@ -1438,6 +1530,7 @@
             Toki <span>Murasaki</span>
         </a>
         <ul class="nav-links">
+            <li><a href="#updates" id="nav-updates" style="display:none">Updates</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#support">Support</a></li>
             <li><a href="#shop">Shop</a></li>
@@ -1455,6 +1548,7 @@
 <!-- Mobile Menu -->
 <div id="mobile-menu">
     <ul>
+        <li id="mobile-nav-updates" style="display:none"><a href="#updates" onclick="closeMenu()">Updates</a></li>
         <li><a href="#about" onclick="closeMenu()">About</a></li>
         <li><a href="#support" onclick="closeMenu()">Support</a></li>
         <li><a href="#shop" onclick="closeMenu()">Shop</a></li>
@@ -1502,6 +1596,20 @@
             </a>
         </div>
         </div><!-- /.hero-text -->
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     UPDATES
+══════════════════════════════════════════ -->
+<section class="sec" id="updates" style="display:none">
+    <div class="sec-inner">
+        <div class="sec-hd">
+            <p class="sec-label">Updates</p>
+            <h2 class="sec-title">Updates</h2>
+            <p class="sec-title-ja">更新情報</p>
+        </div>
+        <div class="updates-list" id="updates-list"></div>
     </div>
 </section>
 
@@ -2068,6 +2176,52 @@ document.querySelectorAll('img').forEach(img => {
     img.addEventListener('contextmenu', e => e.preventDefault());
     img.setAttribute('draggable', 'false');
 });
+
+// ── Updates ──
+(async function loadUpdates() {
+    const section = document.getElementById('updates');
+    const list    = document.getElementById('updates-list');
+    let items;
+    try {
+        const res = await fetch('./data/updates.json');
+        if (!res.ok) throw new Error();
+        items = await res.json();
+        if (!Array.isArray(items) || items.length === 0) return;
+    } catch { return; }
+
+    items = items.slice(0, 100);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    items.forEach(item => {
+        if (!item.date || !item.text) return;
+        const parts = item.date.split('-').map(Number);
+        const postDate = new Date(parts[0], parts[1] - 1, parts[2]);
+        const diffDays = Math.floor((today - postDate) / 86400000);
+        const isNew = !isNaN(postDate.getTime()) && diffDays >= 0 && diffDays <= 3;
+
+        const [y, m, d] = item.date.split('-');
+        const dateLabel = `${y}.${m}.${d}`;
+
+        const row = document.createElement('div');
+        row.className = 'update-item';
+        row.innerHTML =
+            `<div class="update-date">${dateLabel}</div>` +
+            `<div class="update-body">` +
+              (isNew ? `<span class="update-new-badge">NEW</span>` : '') +
+              `<p class="update-text">${item.text}</p>` +
+            `</div>`;
+        list.appendChild(row);
+    });
+
+    if (list.children.length > 0) {
+        section.style.display = '';
+        document.getElementById('nav-updates').style.display = '';
+        const mobileNav = document.getElementById('mobile-nav-updates');
+        if (mobileNav) mobileNav.style.display = '';
+    }
+})();
 
 // ── 支援サイト最新情報 ──
 (async function loadSupportNews() {
