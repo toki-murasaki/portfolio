@@ -1318,7 +1318,17 @@
             flex-direction: column;
             gap: 0;
             position: relative;
+            max-height: 400px;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            padding-right: 6px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--border2) transparent;
         }
+        .updates-list::-webkit-scrollbar { width: 4px; }
+        .updates-list::-webkit-scrollbar-track { background: transparent; }
+        .updates-list::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+        .updates-list::-webkit-scrollbar-thumb:hover { background: var(--accent-d); }
         .updates-list::before {
             content: '';
             position: absolute;
