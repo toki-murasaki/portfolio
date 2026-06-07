@@ -1529,6 +1529,14 @@
             .event-card { padding: 20px 20px 20px 24px; gap: 16px; }
             .event-thumb { width: 100px; height: 134px; }
         }
+        #event-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .event-card--alt {
+            background: var(--bg2);
+        }
 
         /* ─── Fade-in Animation ─── */
         .fade { opacity: 0; transform: translateY(16px); transition: opacity 0.55s ease, transform 0.55s ease; }
@@ -1849,24 +1857,7 @@
             <h2 class="sec-title">Event</h2>
             <p class="sec-title-ja">次回イベント参加情報</p>
         </div>
-        <div class="event-card fade" id="event-card">
-            <div class="event-info">
-                <div class="event-date-row">
-                    <span class="event-date" id="event-date"></span>
-                    <span class="event-weekday" id="event-weekday"></span>
-                </div>
-                <div class="event-name" id="event-name"></div>
-                <div class="event-venue">
-                    <span class="event-venue-icon">📍</span>
-                    <span id="event-venue"></span>
-                </div>
-                <a id="event-link" class="event-link" href="" target="_blank" rel="noopener" style="display:none">
-                    <span id="event-link-label"></span>
-                    <span>→</span>
-                </a>
-            </div>
-            <div class="event-images" id="event-images"></div>
-        </div>
+        <div id="event-cards"></div>
     </div>
 </section>
 
@@ -2339,56 +2330,109 @@ document.querySelectorAll('img').forEach(img => {
 
 // ── Event ──
 (async function loadEvent() {
-    const section = document.getElementById('event');
-    let ev;
+    const section   = document.getElementById('event');
+    const container = document.getElementById('event-cards');
+    let events;
     try {
         const res = await fetch('./data/event.json');
         if (!res.ok) throw new Error();
-        ev = await res.json();
-        if (!ev.date || !ev.name) return;
+        const raw = await res.json();
+        events = Array.isArray(raw) ? raw : [raw];
     } catch { return; }
 
-    const [y, m, d] = ev.date.split('-');
-    document.getElementById('event-date').textContent   = `${y}.${m}.${d}`;
-    document.getElementById('event-weekday').textContent = ev.weekday ? `（${ev.weekday}）` : '';
-    document.getElementById('event-name').textContent   = ev.name;
-    document.getElementById('event-venue').textContent  = ev.venue || '';
-    if (!ev.venue) document.querySelector('.event-venue').style.display = 'none';
-    if (ev.link_url && ev.link_label) {
-        const linkEl = document.getElementById('event-link');
-        document.getElementById('event-link-label').textContent = ev.link_label;
-        linkEl.href = ev.link_url;
-        linkEl.style.display = '';
-    }
+    const validEvents = events.filter(ev => ev.date && ev.name);
+    if (validEvents.length === 0) return;
 
-    const imgWrap = document.getElementById('event-images');
-    if (Array.isArray(ev.images)) {
-        ev.images.slice(0, 2).forEach((src, i) => {
-            if (!src) return;
-            const thumb = document.createElement('div');
-            thumb.className = 'event-thumb';
-            const img = document.createElement('img');
-            img.src = src;
-            img.alt = `お品書き ${i + 1}`;
-            img.loading = 'lazy';
-            img.onerror = () => { thumb.style.display = 'none'; };
-            thumb.appendChild(img);
-            thumb.addEventListener('click', () => {
-                document.getElementById('lb-img').src           = src;
-                document.getElementById('lb-img').alt           = `お品書き ${i + 1}`;
-                document.getElementById('lb-title').textContent = ev.name;
-                document.getElementById('lb-comment').textContent = `お品書き ${i + 1}`;
-                document.getElementById('lightbox').classList.add('open');
+    validEvents.forEach((ev, idx) => {
+        const card = document.createElement('div');
+        card.className = 'event-card fade' + (idx > 0 ? ' event-card--alt' : '');
+
+        const [y, m, d] = ev.date.split('-');
+
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'event-info';
+
+        const dateRow = document.createElement('div');
+        dateRow.className = 'event-date-row';
+        const dateSpan = document.createElement('span');
+        dateSpan.className = 'event-date';
+        dateSpan.textContent = `${y}.${m}.${d}`;
+        const weekdaySpan = document.createElement('span');
+        weekdaySpan.className = 'event-weekday';
+        weekdaySpan.textContent = ev.weekday ? `（${ev.weekday}）` : '';
+        dateRow.appendChild(dateSpan);
+        dateRow.appendChild(weekdaySpan);
+        infoDiv.appendChild(dateRow);
+
+        const nameDiv = document.createElement('div');
+        nameDiv.className = 'event-name';
+        nameDiv.textContent = ev.name;
+        infoDiv.appendChild(nameDiv);
+
+        if (ev.venue) {
+            const venueDiv = document.createElement('div');
+            venueDiv.className = 'event-venue';
+            venueDiv.innerHTML = '<span class="event-venue-icon">📍</span>';
+            const venueSpan = document.createElement('span');
+            venueSpan.textContent = ev.venue;
+            venueDiv.appendChild(venueSpan);
+            infoDiv.appendChild(venueDiv);
+        }
+
+        if (ev.link_url && ev.link_label) {
+            const linkEl = document.createElement('a');
+            linkEl.className = 'event-link';
+            linkEl.href = ev.link_url;
+            linkEl.target = '_blank';
+            linkEl.rel = 'noopener';
+            const labelSpan = document.createElement('span');
+            labelSpan.textContent = ev.link_label;
+            const arrowSpan = document.createElement('span');
+            arrowSpan.textContent = '→';
+            linkEl.appendChild(labelSpan);
+            linkEl.appendChild(arrowSpan);
+            infoDiv.appendChild(linkEl);
+        }
+
+        card.appendChild(infoDiv);
+
+        const imgWrap = document.createElement('div');
+        imgWrap.className = 'event-images';
+        if (Array.isArray(ev.images)) {
+            ev.images.slice(0, 2).forEach((src, i) => {
+                if (!src) return;
+                const thumb = document.createElement('div');
+                thumb.className = 'event-thumb';
+                const img = document.createElement('img');
+                img.src     = src;
+                img.alt     = `お品書き ${i + 1}`;
+                img.loading = 'lazy';
+                img.onerror = () => { thumb.style.display = 'none'; };
+                thumb.appendChild(img);
+                thumb.addEventListener('click', () => {
+                    document.getElementById('lb-img').src             = src;
+                    document.getElementById('lb-img').alt             = `お品書き ${i + 1}`;
+                    document.getElementById('lb-title').textContent   = ev.name;
+                    document.getElementById('lb-comment').textContent = `お品書き ${i + 1}`;
+                    document.getElementById('lightbox').classList.add('open');
+                });
+                imgWrap.appendChild(thumb);
             });
-            imgWrap.appendChild(thumb);
-        });
-    }
-    if (!imgWrap.children.length) imgWrap.style.display = 'none';
+        }
+        if (!imgWrap.children.length) imgWrap.style.display = 'none';
 
+        card.appendChild(imgWrap);
+        container.appendChild(card);
+    });
+
+    // カードを全部追加してからセクションを表示し、その後IOに登録する。
+    // display:none の状態でio.observeすると交差判定が0になりfade-inしない。
     section.style.display = '';
     document.getElementById('nav-event').style.display = '';
     const mobileNavEv = document.getElementById('mobile-nav-event');
     if (mobileNavEv) mobileNavEv.style.display = '';
+
+    container.querySelectorAll('.fade').forEach(el => io.observe(el));
 })();
 
 // ── Updates ──
