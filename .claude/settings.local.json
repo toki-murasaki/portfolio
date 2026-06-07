@@ -20,7 +20,8 @@
       "PowerShell(git pull *)",
       "PowerShell(git *)",
       "PowerShell(git stash show stash@{0} --name-only; echo \"---\"; git stash show stash@{1} --name-only)",
-      "Bash(git stash *)"
+      "Bash(git stash *)",
+      "Bash(Get-ChildItem C:\\\\portfolio\\\\admin *)"
     ]
   }
 }

@@ -1501,6 +1501,26 @@
             object-fit: cover;
             display: block;
         }
+        .event-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 4px;
+            padding: 8px 18px;
+            border: 1px solid var(--accent-t);
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--accent-t);
+            text-decoration: none;
+            transition: all 0.25s;
+            align-self: flex-start;
+        }
+        .event-link:hover {
+            background: rgba(110,198,232,0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(26,142,176,0.14);
+        }
         @media (max-width: 820px) {
             .event-card { grid-template-columns: 1fr; gap: 20px; padding: 24px 28px; }
             .event-images { justify-content: flex-start; }
@@ -1840,6 +1860,10 @@
                     <span class="event-venue-icon">📍</span>
                     <span id="event-venue"></span>
                 </div>
+                <a id="event-link" class="event-link" href="" target="_blank" rel="noopener" style="display:none">
+                    <span id="event-link-label"></span>
+                    <span>→</span>
+                </a>
             </div>
             <div class="event-images" id="event-images"></div>
         </div>
@@ -2330,6 +2354,12 @@ document.querySelectorAll('img').forEach(img => {
     document.getElementById('event-name').textContent   = ev.name;
     document.getElementById('event-venue').textContent  = ev.venue || '';
     if (!ev.venue) document.querySelector('.event-venue').style.display = 'none';
+    if (ev.link_url && ev.link_label) {
+        const linkEl = document.getElementById('event-link');
+        document.getElementById('event-link-label').textContent = ev.link_label;
+        linkEl.href = ev.link_url;
+        linkEl.style.display = '';
+    }
 
     const imgWrap = document.getElementById('event-images');
     if (Array.isArray(ev.images)) {
