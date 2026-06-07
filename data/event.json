@@ -1,12 +1,26 @@
-{
-  "date": "2026-06-07",
-  "weekday": "日",
-  "name": "コミティア156",
-  "venue": "東京ビッグサイト",
-  "images": [
-    "https://toki-murasaki.github.io/portfolio/images/event-oshinagaki1.jpg",
-    "https://toki-murasaki.github.io/portfolio/images/event-oshinagaki2.jpg"
-  ],
-  "link_url": "https://toki-murasaki.fanbox.cc/posts/12044803",
-  "link_label": "事後通販についてはこちら"
-}
+[
+  {
+    "date": "2026-06-07",
+    "weekday": "日",
+    "name": "コミティア156",
+    "venue": "東京ビッグサイト",
+    "images": [
+      "https://toki-murasaki.github.io/portfolio/images/event-oshinagaki1.jpg",
+      "https://toki-murasaki.github.io/portfolio/images/event-oshinagaki2.jpg"
+    ],
+    "link_url": "https://toki-murasaki.fanbox.cc/posts/12044803",
+    "link_label": "事後通販についてはこちら"
+  },
+  {
+    "date": "2026-08-15",
+    "weekday": "土",
+    "name": "コミックマーケット108",
+    "venue": "東京ビッグサイト",
+    "images": [
+      "https://toki-murasaki.github.io/portfolio/images/event2-oshinagaki1.png",
+      "https://toki-murasaki.github.io/portfolio/images/event2-oshinagaki2.png"
+    ],
+    "link_url": "https://toki-murasaki.fanbox.cc/posts/12038891",
+    "link_label": "関連FANBOX記事"
+  }
+]
