@@ -1283,6 +1283,21 @@
         #scroll-top.vis { opacity: 1; pointer-events: auto; }
         #scroll-top:hover { border-color: var(--accent-t); color: var(--accent-t); }
 
+        /* ─── Shop メッセージ ─── */
+        .shop-msg {
+            background: linear-gradient(135deg, #a855f7, #22d3ee, #ec4899, #a855f7);
+            background-size: 300% 300%;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            padding: 6px 12px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            animation: aurora-flow 3s ease infinite;
+            line-height: 1.55;
+        }
+
         /* ─── NEW バッジ ─── */
         @keyframes new-blink {
             0%, 100% { opacity: 1; }
@@ -1874,7 +1889,7 @@
         </div>
         <div class="shop-grid">
             <!-- ここを編集: ショップカードの順番・内容を変更できます -->
-            <div class="shop-card fade">
+            <div class="shop-card fade" id="shop-card-booth">
                 <div class="shop-icon"><img src="images/booth.png" alt="BOOTH" class="shop-logo"></div>
                 <h3 class="shop-name">BOOTH</h3>
                 <p class="shop-desc">
@@ -1884,7 +1899,7 @@
                     BOOTHショップへ <span>→</span>
                 </a>
             </div>
-            <div class="shop-card fade">
+            <div class="shop-card fade" id="shop-card-melon">
                 <div class="shop-icon"><img src="images/melon.png" alt="メロンブックス" class="shop-logo"></div>
                 <h3 class="shop-name">メロンブックス</h3>
                 <p class="shop-desc">
@@ -1894,7 +1909,7 @@
                     メロンブックスへ <span>→</span>
                 </a>
             </div>
-            <div class="shop-card fade">
+            <div class="shop-card fade" id="shop-card-dlsite">
                 <div class="shop-icon"><img src="images/dlsite.png" alt="DLsite" class="shop-logo"></div>
                 <h3 class="shop-name">DLsite</h3>
                 <p class="shop-desc">
@@ -1905,7 +1920,7 @@
                     DLsiteサークルページへ <span>→</span>
                 </a>
             </div>
-            <div class="shop-card fade">
+            <div class="shop-card fade" id="shop-card-fanza">
                 <div class="shop-icon"><img src="images/fanza.png" alt="FANZA" class="shop-logo"></div>
                 <h3 class="shop-name">FANZA同人</h3>
                 <p class="shop-desc">
@@ -2518,6 +2533,26 @@ const JP_HOLIDAYS = new Set([
         const mobileNav = document.getElementById('mobile-nav-updates');
         if (mobileNav) mobileNav.style.display = '';
     }
+})();
+
+// ── ショップメッセージ ──
+(async function loadShopMessages() {
+    try {
+        const res = await fetch('./data/shops.json');
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        ['booth', 'melon', 'dlsite', 'fanza'].forEach(key => {
+            const msg = (data[key] && data[key].message || '').trim();
+            if (!msg) return;
+            const card = document.getElementById(`shop-card-${key}`);
+            if (!card) return;
+            const msgEl = document.createElement('p');
+            msgEl.className = 'shop-msg';
+            msgEl.textContent = msg;
+            const nameEl = card.querySelector('.shop-name');
+            if (nameEl) nameEl.insertAdjacentElement('afterend', msgEl);
+        });
+    } catch (_) {}
 })();
 
 // ── 支援サイト最新情報 ──
