@@ -1,6 +1,14 @@
 {
-  "booth": { "message": "" },
-  "melon": { "message": "" },
-  "dlsite": { "message": "" },
-  "fanza": { "message": "" }
+  "booth": {
+    "message": "コミティア156事後通販を9日22時から開始！"
+  },
+  "melon": {
+    "message": "コミティア156新刊販売中！"
+  },
+  "dlsite": {
+    "message": ""
+  },
+  "fanza": {
+    "message": ""
+  }
 }
