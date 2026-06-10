@@ -277,19 +277,40 @@
         /* ─── Hero（ダークのまま維持 — コントラスト演出） ─── */
         #hero {
             background: #0d0d0d;
-            min-height: 88vh;
+            height: 100vh;
+            min-height: 640px;
             display: flex;
             align-items: center;
-            justify-content: center;
             position: relative;
             overflow: hidden;
-            padding: 60px 20px;
+            padding: 0;
+        }
+        .hero-visual {
+            position: absolute;
+            inset: 0;
+            width: 60%;
+            height: 100%;
+            z-index: 0;
+        }
+        .hero-meishi {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+        }
+        .hero-fade {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent 35%, #0d0d0d 100%);
         }
         .hero-bg {
             position: absolute; inset: 0;
             background:
                 radial-gradient(ellipse at 15% 60%, rgba(110,198,232,0.07) 0%, transparent 55%),
                 radial-gradient(ellipse at 85% 20%, rgba(110,198,232,0.05) 0%, transparent 45%);
+            z-index: 1;
+            pointer-events: none;
         }
         .hero-grid {
             position: absolute; inset: 0;
@@ -297,22 +318,20 @@
                 linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
             background-size: 56px 56px;
+            z-index: 1;
+            pointer-events: none;
         }
         .hero-content {
             position: relative;
-            max-width: 980px;
+            z-index: 2;
             width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 60px;
             display: flex;
-            align-items: center;
-            gap: 56px;
+            justify-content: flex-end;
         }
-        .hero-meishi {
-            height: calc(88vh - 160px);
-            max-height: 460px;
-            width: auto;
-            flex-shrink: 0;
-        }
-        .hero-text { text-align: left; }
+        .hero-text { text-align: left; max-width: 460px; }
         .hero-eyebrow {
             font-family: var(--en);
             font-size: 10px;
@@ -1333,7 +1352,7 @@
             flex-direction: column;
             gap: 0;
             position: relative;
-            max-height: 400px;
+            max-height: 280px;
             overflow-y: auto;
             overscroll-behavior: contain;
             padding: 0 14px 0 20px;
@@ -1350,7 +1369,7 @@
         .updates-list::before {
             content: '';
             position: absolute;
-            left: 88px;
+            left: 108px;
             top: 0;
             bottom: 0;
             width: 1px;
@@ -1418,7 +1437,7 @@
         }
 
         @media (max-width: 640px) {
-            .updates-list::before { left: 72px; }
+            .updates-list::before { left: 92px; }
             .update-item { grid-template-columns: 72px 1fr; gap: 0 16px; }
             .update-item::after { left: 68px; }
             .update-date { font-size: 10px; }
@@ -1587,10 +1606,11 @@
             .sec-hd { margin-bottom: 22px; }
 
             /* ヒーロー */
-            #hero { min-height: 80vh; padding: 48px 16px; }
-            .hero-content { flex-direction: column; gap: 32px; }
-            .hero-meishi { height: 260px; width: auto; max-height: none; }
-            .hero-text { text-align: center; }
+            #hero { height: auto; min-height: 100vh; flex-direction: column; justify-content: flex-start; }
+            .hero-visual { position: relative; width: 100%; height: 52vh; min-height: 320px; }
+            .hero-fade { background: linear-gradient(180deg, transparent 35%, #0d0d0d 100%); }
+            .hero-content { padding: 32px 24px 48px; justify-content: center; }
+            .hero-text { max-width: 100%; text-align: center; }
             .hero-name-group { margin: 0 auto; }
             .hero-sns { justify-content: center; gap: 10px; }
             .hero-tagline { font-size: 12px; line-height: 2; margin-bottom: 32px; }
@@ -1716,10 +1736,13 @@
      HERO
 ══════════════════════════════════════════ -->
 <section id="hero">
+    <div class="hero-visual">
+        <img src="images/meishi.png" alt="村咲とき 名刺" class="hero-meishi" loading="eager">
+        <div class="hero-fade"></div>
+    </div>
     <div class="hero-bg"></div>
     <div class="hero-grid"></div>
     <div class="hero-content">
-        <img src="images/meishi.png" alt="村咲とき 名刺" class="hero-meishi" loading="eager">
         <div class="hero-text">
         <p class="hero-eyebrow">Illustrator · 同人作家</p>
         <div class="hero-name-group">
