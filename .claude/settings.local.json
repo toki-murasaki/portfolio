@@ -64,7 +64,8 @@
       "Bash(rm -f hero-full.png hero-boundary.png hero-with-dots.png hero-without-dots.png zone-left.png zone-band.png zone-right.png hero-mobile.png)",
       "Bash(ls *.png)",
       "Bash(pkill -f \"http.server 8123\")",
-      "Bash(rm -f hero-halftone-full.png hero-halftone-band.png hero-check.png hero-check-off.png hero-band-zoom.png hero-mobile2.png hero-mobile3.png hero-desktop-final.png)"
+      "Bash(rm -f hero-halftone-full.png hero-halftone-band.png hero-check.png hero-check-off.png hero-band-zoom.png hero-mobile2.png hero-mobile3.png hero-desktop-final.png)",
+      "Bash(rm -f hero-v2-full.png hero-v2-band.png hero-v2-zoom1.png hero-v2-zoom2.png hero-v2-mobile.png)"
     ]
   }
 }

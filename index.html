@@ -321,7 +321,7 @@
             z-index: 1;
             pointer-events: none;
         }
-        /* ハーフトーン・グラデーション：横幅45-75%の帯で大→中→小→極小ドットへ段階的に縮小 */
+        /* ハーフトーン・グラデーション：横幅52-72%の帯で小→中→大→極大ドットへ段階的に拡大（千鳥配置） */
         .hero-halftone {
             position: absolute; inset: 0;
             z-index: 1;
@@ -329,28 +329,31 @@
         }
         .hero-halftone span {
             position: absolute; inset: 0;
-            background-image: radial-gradient(circle, #0d0d0d var(--dot-r), transparent var(--dot-r));
-            background-size: 16px 16px;
+            background-image:
+                radial-gradient(circle, #0d0d0d var(--dot-r), transparent var(--dot-r)),
+                radial-gradient(circle, #0d0d0d var(--dot-r), transparent var(--dot-r));
+            background-size: 32px 64px;
+            background-position: 0 0, 16px 32px;
         }
         .hero-halftone span:nth-child(1) {
-            --dot-r: 7px;
-            -webkit-mask-image: linear-gradient(90deg, transparent 43%, #000 47%, #000 53%, transparent 58%);
-                    mask-image: linear-gradient(90deg, transparent 43%, #000 47%, #000 53%, transparent 58%);
+            --dot-r: 2.5px;
+            -webkit-mask-image: linear-gradient(90deg, transparent 52%, #000 54%, #000 58%, transparent 60%);
+                    mask-image: linear-gradient(90deg, transparent 52%, #000 54%, #000 58%, transparent 60%);
         }
         .hero-halftone span:nth-child(2) {
             --dot-r: 4px;
-            -webkit-mask-image: linear-gradient(90deg, transparent 50%, #000 54%, #000 61%, transparent 65%);
-                    mask-image: linear-gradient(90deg, transparent 50%, #000 54%, #000 61%, transparent 65%);
+            -webkit-mask-image: linear-gradient(90deg, transparent 56%, #000 58%, #000 62%, transparent 64%);
+                    mask-image: linear-gradient(90deg, transparent 56%, #000 58%, #000 62%, transparent 64%);
         }
         .hero-halftone span:nth-child(3) {
-            --dot-r: 2px;
-            -webkit-mask-image: linear-gradient(90deg, transparent 58%, #000 62%, #000 69%, transparent 73%);
-                    mask-image: linear-gradient(90deg, transparent 58%, #000 62%, #000 69%, transparent 73%);
+            --dot-r: 8px;
+            -webkit-mask-image: linear-gradient(90deg, transparent 60%, #000 62%, #000 66%, transparent 68%);
+                    mask-image: linear-gradient(90deg, transparent 60%, #000 62%, #000 66%, transparent 68%);
         }
         .hero-halftone span:nth-child(4) {
-            --dot-r: 1.25px;
-            -webkit-mask-image: linear-gradient(90deg, transparent 66%, #000 70%, #000 75%, transparent 79%);
-                    mask-image: linear-gradient(90deg, transparent 66%, #000 70%, #000 75%, transparent 79%);
+            --dot-r: 14px;
+            -webkit-mask-image: linear-gradient(90deg, transparent 64%, #000 66%, #000 70%, transparent 72%);
+                    mask-image: linear-gradient(90deg, transparent 64%, #000 66%, #000 70%, transparent 72%);
         }
         .hero-content {
             position: relative;
