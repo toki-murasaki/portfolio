@@ -51,7 +51,19 @@
       "Bash(node *)",
       "Bash(taskkill //F //IM msedge.exe //T)",
       "Bash(python *)",
-      "Bash(echo \"exit:$?\")"
+      "Bash(echo \"exit:$?\")",
+      "Bash(python -m http.server 8123)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8123/index.html)",
+      "Bash(npx --yes playwright --version)",
+      "Bash(npm root *)",
+      "Bash(npx playwright *)",
+      "Bash(NODE_OPTIONS=\"--use-system-ca\" npx playwright install chromium)",
+      "Bash(NODE_OPTIONS=\"--use-system-ca\" npx playwright *)",
+      "Bash(cp \"/c/Users/UVMP__~1/AppData/Local/Temp/hero-desktop.png\" /tmp/hero-desktop.png)",
+      "Bash(ls -la /tmp/*.png)",
+      "Bash(rm -f hero-full.png hero-boundary.png hero-with-dots.png hero-without-dots.png zone-left.png zone-band.png zone-right.png hero-mobile.png)",
+      "Bash(ls *.png)",
+      "Bash(pkill -f \"http.server 8123\")"
     ]
   }
 }
