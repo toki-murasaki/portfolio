@@ -73,7 +73,10 @@
       "PowerShell($env:NODE_OPTIONS=\"--use-system-ca\"; node \"C:\\\\tmp\\\\screenshot21.js\")",
       "PowerShell($env:NODE_OPTIONS=\"--use-system-ca\"; node \"C:\\\\tmp\\\\screenshot22.js\")",
       "PowerShell($env:NODE_OPTIONS=\"--use-system-ca\"; node \"C:\\\\tmp\\\\screenshot23.js\")",
-      "PowerShell($env:NODE_OPTIONS=\"--use-system-ca\"; node \"C:\\\\tmp\\\\screenshot24.js\")"
+      "PowerShell($env:NODE_OPTIONS=\"--use-system-ca\"; node \"C:\\\\tmp\\\\screenshot24.js\")",
+      "Bash(grep *)",
+      "Bash(echo \"exit=$?\")",
+      "Bash(git --version)"
     ]
   }
 }
