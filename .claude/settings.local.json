@@ -76,7 +76,8 @@
       "PowerShell($env:NODE_OPTIONS=\"--use-system-ca\"; node \"C:\\\\tmp\\\\screenshot24.js\")",
       "Bash(grep *)",
       "Bash(echo \"exit=$?\")",
-      "Bash(git --version)"
+      "Bash(git --version)",
+      "Bash(magick identify *)"
     ]
   }
 }
