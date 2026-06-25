@@ -77,7 +77,10 @@
       "Bash(grep *)",
       "Bash(echo \"exit=$?\")",
       "Bash(git --version)",
-      "Bash(magick identify *)"
+      "Bash(magick identify *)",
+      "Bash(python3 -c \"import json,sys; print\\(len\\(json.load\\(sys.stdin\\)\\)\\)\")",
+      "Bash(powershell -c \"\\(Get-Content data/updates.json | ConvertFrom-Json\\).Count\")",
+      "Bash(git log *)"
     ]
   }
 }
