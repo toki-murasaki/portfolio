@@ -80,7 +80,17 @@
       "Bash(magick identify *)",
       "Bash(python3 -c \"import json,sys; print\\(len\\(json.load\\(sys.stdin\\)\\)\\)\")",
       "Bash(powershell -c \"\\(Get-Content data/updates.json | ConvertFrom-Json\\).Count\")",
-      "Bash(git log *)"
+      "Bash(git log *)",
+      "Bash(where chrome.exe)",
+      "Bash(where msedge.exe)",
+      "Bash(pip show *)",
+      "Bash('/c/Program Files \\(x86\\)/Microsoft/Edge/Application/msedge.exe' --headless --disable-gpu --window-size=375,700 '--screenshot=C:\\\\Users\\\\UVMP__OJS3L0U\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--portfolio\\\\3c559221-d06a-46f4-99ac-9092925141e5\\\\scratchpad\\\\orig-375.png' http://localhost:8924/index.html)",
+      "Bash('/c/Program Files \\(x86\\)/Microsoft/Edge/Application/msedge.exe' --headless=new --disable-gpu --hide-scrollbars --window-size=375,800 '--screenshot=C:\\\\Users\\\\UVMP__OJS3L0U\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--portfolio\\\\3c559221-d06a-46f4-99ac-9092925141e5\\\\scratchpad\\\\hamb-test.png' http://localhost:8923/index.html)",
+      "Bash(pip list *)",
+      "Bash(pkill -f \"http.server 8923\")",
+      "Bash(pkill -f \"http.server 8924\")",
+      "Bash(rm -rf /tmp/orig_check /tmp/server.log /tmp/server2.log)",
+      "Bash('/c/Program Files \\(x86\\)/Microsoft/Edge/Application/msedge.exe' --headless --disable-gpu --window-size=375,700 '--screenshot=C:\\\\Users\\\\UVMP__OJS3L0U\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--portfolio\\\\3c559221-d06a-46f4-99ac-9092925141e5\\\\scratchpad\\\\v3-375.png' http://localhost:8923/index.html)"
     ]
   }
 }

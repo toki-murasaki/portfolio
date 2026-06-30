@@ -195,6 +195,13 @@
         }
         .nav-links a:hover { color: var(--accent-t); }
         .nav-links a:hover::after { width: 100%; }
+        @media (max-width: 1180px) {
+            .nav-links { gap: 16px; }
+        }
+        @media (max-width: 900px) {
+            .nav-links { gap: 10px; }
+            .nav-links a { font-size: 10px; }
+        }
         .hamburger {
             display: none;
             flex-direction: column;
@@ -1759,6 +1766,7 @@
             <li><a href="#credits">VTuber</a></li>
             <li><a href="#gallery">Gallery</a></li>
             <li><a href="#commission">Commission</a></li>
+            <li><a href="https://toki-murasaki.github.io/tools/" target="_blank" rel="noopener">Tools</a></li>
         </ul>
         <button class="hamburger" id="hamburger" aria-label="メニュー" onclick="toggleMenu()">
             <span></span><span></span><span></span>
@@ -1778,6 +1786,7 @@
         <li><a href="#credits" onclick="closeMenu()">VTuber</a></li>
         <li><a href="#gallery" onclick="closeMenu()">Gallery</a></li>
         <li><a href="#commission" onclick="closeMenu()">Commission</a></li>
+        <li><a href="https://toki-murasaki.github.io/tools/" target="_blank" rel="noopener" onclick="closeMenu()">Tools</a></li>
     </ul>
 </div>
 
