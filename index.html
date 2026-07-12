@@ -677,6 +677,75 @@
         .support-card-fantia .support-cta { color: #b0446a; }
         .support-card:hover .support-cta { gap: 10px; }
 
+        /* ─── note 記事カード（補助的な導線・控えめ） ─── */
+        .note-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-top: 14px;
+            padding: 12px 16px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: var(--bg3);
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.28s;
+            position: relative;
+            overflow: hidden;
+        }
+        .note-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; bottom: 0;
+            width: 3px;
+            background: #41c9b4;
+        }
+        .note-card:hover {
+            transform: translateY(-2px);
+            border-color: #41c9b4;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.07);
+        }
+        .note-badge {
+            flex-shrink: 0;
+            font-family: var(--en);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            padding: 4px 12px;
+            border-radius: 4px;
+            background: rgba(65,201,180,0.12);
+            color: #1a8a78;
+            border: 1px solid rgba(65,201,180,0.3);
+        }
+        .note-title {
+            flex: 1;
+            min-width: 0;
+            font-size: 12.5px;
+            font-weight: 400;
+            color: var(--text2);
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .note-arrow {
+            flex-shrink: 0;
+            font-family: var(--en);
+            font-size: 12px;
+            color: var(--text3);
+            transition: transform 0.25s, color 0.25s;
+        }
+        .note-card:hover .note-arrow {
+            transform: translateX(4px);
+            color: #1a8a78;
+        }
+        @media (max-width: 640px) {
+            .note-card { gap: 10px; padding: 11px 13px; }
+            .note-badge { font-size: 10px; padding: 3px 9px; }
+            .note-title { font-size: 12px; }
+        }
+
         /* ─── 最新記事カード ─── */
         .snews-card {
             flex: 1;
@@ -1943,6 +2012,13 @@
             <!-- Fantia 最新記事 -->
             <div class="snews-slot" id="snews-fantia"></div>
         </div>
+        <!-- note 記事（補助的な導線） -->
+        <!-- TODO: 公開後に記事URLへ差し替え -->
+        <a href="https://note.com/toki_murasaki/" target="_blank" rel="noopener" class="note-card">
+            <span class="note-badge">note</span>
+            <span class="note-title">Xのシャドウバンが2か月近く治らなかった本当の原因はイラストじゃなかった【2026年最新・体験談】</span>
+            <span class="note-arrow">→</span>
+        </a>
     </div>
 </section>
 
