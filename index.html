@@ -1520,6 +1520,17 @@
             color: var(--text2);
             line-height: 1.7;
         }
+        .update-text a.update-link {
+            color: var(--accent);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            text-decoration-color: var(--border2);
+            transition: text-decoration-color 0.2s, color 0.2s;
+        }
+        .update-text a.update-link:hover {
+            color: var(--accent-d);
+            text-decoration-color: var(--accent-d);
+        }
         .update-new-badge {
             display: inline-flex;
             align-items: center;
@@ -2680,11 +2691,14 @@ const JP_HOLIDAYS = new Set([
 
         const row = document.createElement('div');
         row.className = 'update-item';
+        const textHtml = item.link
+            ? `<a class="update-link" href="${item.link}" target="_blank" rel="noopener noreferrer">${item.text}</a>`
+            : item.text;
         row.innerHTML =
             `<div class="update-date">${dateLabel}</div>` +
             `<div class="update-body">` +
               (isNew ? `<span class="update-new-badge">NEW</span>` : '') +
-              `<p class="update-text">${item.text}</p>` +
+              `<p class="update-text">${textHtml}</p>` +
             `</div>`;
         list.appendChild(row);
     });
