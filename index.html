@@ -649,6 +649,24 @@
             text-align: center;
             padding: 0 16px;
         }
+        /* 埋め込みが再生できない環境（アカウント制限・ブロッカー等）向けの逃げ道 */
+        .yt-latest-fallback {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 8px;
+        }
+        .yt-latest-fallback a {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            color: var(--text3);
+            letter-spacing: 0.04em;
+            transition: color 0.2s;
+        }
+        .yt-latest-fallback a:hover { color: #c4302b; }
+        .yt-latest-fallback a span { transition: transform 0.25s; }
+        .yt-latest-fallback a:hover span { transform: translateX(3px); }
 
         /* 活動を見る カードグリッド */
         .contents-grid {
@@ -2247,6 +2265,12 @@
                     <span class="yt-embed-text">クリックで最新動画を再生</span>
                 </button>
             </div>
+            <!-- ブラウザやGoogleアカウントの制限で埋め込みが再生できない場合の導線 -->
+            <p class="yt-latest-fallback">
+                <a href="https://www.youtube.com/@tokimurasaki/videos" target="_blank" rel="noopener">
+                    再生できない場合はYouTubeで見る <span>→</span>
+                </a>
+            </p>
         </div>
         <!-- ══════ ここまで YouTube 最新動画ブロック ══════ -->
 
