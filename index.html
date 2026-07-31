@@ -427,6 +427,14 @@
             opacity: 0.7;
             transform: translateY(-2px) scale(0.88);
         }
+        /* X（旧Twitter）: 公式ロゴは背景に合わせて白／黒を使い分ける */
+        .hero-sns .sns-btn-x { color: #ffffff; }
+        .hero-sns .sns-btn-x:hover { color: var(--accent); }
+        footer .sns-btn.sns-btn-x { color: #0f0f0f; }
+        footer .sns-btn.sns-btn-x:hover { color: var(--accent-t); }
+        /* YouTube: 公式ロゴ（赤の角丸長方形＋白い再生三角）はSVG内で直接塗るため色指定は不要 */
+        .hero-sns .sns-btn-yt svg { width: 18px; height: 18px; }
+        footer .sns-btn-yt svg { width: 16px; height: 16px; }
 
         /* ─── About ─── */
         #about { background: var(--bg3); padding-top: 44px; padding-bottom: 44px; }
@@ -554,6 +562,250 @@
         .oc-badge p { font-size: 13px; color: var(--text2); line-height: 1.7; }
         .oc-badge strong { color: var(--accent-t); }
 
+        /* ─── Contents Section（活動を見る） ─── */
+        #contents { background: var(--bg4); }
+
+        /* YouTube 最新動画ブロック（将来 RSS→JSON の独自表示に差し替え予定） */
+        .yt-latest {
+            max-width: 760px;
+            margin: 0 auto 26px;
+        }
+        .yt-latest-hd {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        .yt-latest-label {
+            font-family: var(--en);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #c4302b;
+        }
+        .yt-latest-note {
+            font-size: 11px;
+            color: var(--text3);
+            letter-spacing: 0.04em;
+        }
+        /* 16:9 を保ったまま親要素の幅に追従 */
+        .yt-embed {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+            background: #0f0f0f;
+        }
+        .yt-embed iframe,
+        .yt-embed-poster {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        /* クリックされるまで iframe を読み込まないためのサムネ面 */
+        .yt-embed-poster {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background:
+                radial-gradient(ellipse at 50% 45%, rgba(255,0,0,0.16) 0%, transparent 60%),
+                linear-gradient(160deg, #1c1c1c 0%, #0f0f0f 100%);
+            transition: background 0.28s;
+        }
+        .yt-embed-poster:hover { background: linear-gradient(160deg, #262626 0%, #141414 100%); }
+        .yt-embed-play {
+            width: 62px;
+            height: 44px;
+            border-radius: 12px;
+            background: #ff0000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.25s;
+        }
+        .yt-embed-poster:hover .yt-embed-play { transform: scale(1.08); }
+        .yt-embed-play svg { width: 22px; height: 22px; }
+        .yt-embed-text {
+            font-size: 12px;
+            font-weight: 400;
+            color: rgba(255,255,255,0.72);
+            letter-spacing: 0.06em;
+            text-align: center;
+            padding: 0 16px;
+        }
+
+        /* 活動を見る カードグリッド */
+        .contents-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        .contents-cell { display: flex; }
+        .contents-cell > .contents-card { flex: 1; }
+        .contents-card {
+            display: flex;
+            flex-direction: column;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: var(--bg3);
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.28s;
+            position: relative;
+        }
+        .contents-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            z-index: 1;
+        }
+        .contents-card-note::before  { background: #41c9b4; }
+        .contents-card-yt::before    { background: #ff0000; }
+        .contents-card-pixiv::before { background: #0096fa; }
+        .contents-card-ig::before    { background: linear-gradient(90deg, #f58529, #dd2a7b, #8134af); }
+        a.contents-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 22px rgba(0,0,0,0.08);
+        }
+        a.contents-card-note:hover  { border-color: #41c9b4; }
+        a.contents-card-yt:hover    { border-color: #ff0000; }
+        a.contents-card-pixiv:hover { border-color: #0096fa; }
+        .contents-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 168px;
+        }
+        .contents-visual img,
+        .contents-visual svg { width: 54px; height: 54px; object-fit: contain; }
+        .contents-card-note  .contents-visual { background: linear-gradient(135deg, rgba(65,201,180,0.18), rgba(65,201,180,0.04)); }
+        .contents-card-yt    .contents-visual { background: linear-gradient(135deg, rgba(255,0,0,0.13), rgba(255,0,0,0.03)); }
+        .contents-card-pixiv .contents-visual { background: linear-gradient(135deg, rgba(0,150,250,0.13), rgba(0,150,250,0.03)); }
+        .contents-card-ig    .contents-visual { background: linear-gradient(135deg, rgba(221,42,123,0.12), rgba(129,52,175,0.04)); }
+        .contents-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 12px 16px 14px;
+            border-top: 1px solid var(--border);
+            overflow: hidden;
+        }
+        .contents-badge {
+            align-self: flex-start;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            padding: 1px 7px;
+            border-radius: 3px;
+            background: rgba(65,201,180,0.12);
+            color: #1a8a78;
+            border: 1px solid rgba(65,201,180,0.3);
+        }
+        .contents-label {
+            font-family: var(--en);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+        .contents-card-note  .contents-label { color: #1a8a78; }
+        .contents-card-yt    .contents-label { color: #c4302b; }
+        .contents-card-pixiv .contents-label { color: #0077c8; }
+        .contents-card-ig    .contents-label { color: #a3306b; }
+        .contents-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .contents-desc { font-size: 11.5px; color: var(--text2); line-height: 1.6; }
+        .contents-cta {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: auto;
+            padding-top: 4px;
+            font-family: var(--en);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            transition: gap 0.25s;
+        }
+        .contents-card-note  .contents-cta { color: #1a8a78; }
+        .contents-card-yt    .contents-cta { color: #c4302b; }
+        a.contents-card:hover .contents-cta { gap: 10px; }
+
+        /* 小カード（pixiv / Instagram）— 控えめな横並び */
+        .contents-card-sm {
+            flex-direction: row;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px 14px;
+            padding: 16px;
+        }
+        .contents-card-sm .contents-body { min-width: 150px; }
+        .contents-card-sm .contents-visual {
+            width: 46px; min-width: 46px; height: 46px;
+            border-radius: 8px;
+        }
+        .contents-card-sm .contents-visual img,
+        .contents-card-sm .contents-visual svg { width: 24px; height: 24px; }
+        .contents-card-sm .contents-body {
+            padding: 0;
+            border-top: none;
+            gap: 3px;
+        }
+        .contents-card-sm .contents-title { font-size: 13px; -webkit-line-clamp: 1; line-clamp: 1; }
+        .contents-arrow {
+            flex-shrink: 0;
+            font-family: var(--en);
+            font-size: 12px;
+            color: var(--text3);
+            transition: transform 0.25s, color 0.25s;
+        }
+        a.contents-card-sm:hover .contents-arrow { transform: translateX(4px); color: var(--accent-t); }
+
+        /* 準備中（Coming Soon）状態 */
+        .contents-card.is-soon { cursor: default; }
+        .contents-card.is-soon::before { opacity: 0.35; }
+        .contents-card.is-soon .contents-visual,
+        .contents-card.is-soon .contents-body,
+        .contents-card.is-soon .contents-arrow {
+            opacity: 0.32;
+            filter: grayscale(1);
+        }
+        .contents-soon {
+            flex-shrink: 0;
+            margin-left: auto;
+            font-family: var(--en);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            white-space: nowrap;
+            padding: 5px 14px;
+            border-radius: 20px;
+            background: var(--bg4);
+            border: 1px dashed var(--border2);
+            color: var(--text3);
+        }
+
         /* ─── Support Section ─── */
         #support { background: var(--bg2); }
         .support-main-grid {
@@ -677,75 +929,6 @@
         .support-card-fantia .support-cta { color: #b0446a; }
         .support-card:hover .support-cta { gap: 10px; }
 
-        /* ─── note 記事カード（補助的な導線・控えめ） ─── */
-        .note-slot { display: block; }
-        .note-card {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-top: 14px;
-            padding: 12px 16px;
-            border-radius: 6px;
-            border: 1px solid var(--border);
-            background: var(--bg3);
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.28s;
-            position: relative;
-            overflow: hidden;
-        }
-        .note-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; bottom: 0;
-            width: 3px;
-            background: #41c9b4;
-        }
-        .note-card:hover {
-            transform: translateY(-2px);
-            border-color: #41c9b4;
-            box-shadow: 0 5px 18px rgba(0,0,0,0.07);
-        }
-        .note-badge {
-            flex-shrink: 0;
-            font-family: var(--en);
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.04em;
-            padding: 4px 12px;
-            border-radius: 4px;
-            background: rgba(65,201,180,0.12);
-            color: #1a8a78;
-            border: 1px solid rgba(65,201,180,0.3);
-        }
-        .note-title {
-            flex: 1;
-            min-width: 0;
-            font-size: 12.5px;
-            font-weight: 400;
-            color: var(--text2);
-            line-height: 1.5;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        .note-arrow {
-            flex-shrink: 0;
-            font-family: var(--en);
-            font-size: 12px;
-            color: var(--text3);
-            transition: transform 0.25s, color 0.25s;
-        }
-        .note-card:hover .note-arrow {
-            transform: translateX(4px);
-            color: #1a8a78;
-        }
-        @media (max-width: 640px) {
-            .note-card { gap: 10px; padding: 11px 13px; }
-            .note-badge { font-size: 10px; padding: 3px 9px; }
-            .note-title { font-size: 12px; }
-        }
 
         /* ─── 最新記事カード ─── */
         .snews-card {
@@ -1764,6 +1947,13 @@
             .oc-name { font-size: 28px; }
             .oc-desc { font-size: 14px; }
 
+            /* Contents（活動を見る） */
+            .contents-grid { grid-template-columns: 1fr; }
+            .contents-visual { height: 150px; }
+            .yt-latest { margin-bottom: 20px; }
+            .yt-embed-play { width: 54px; height: 38px; }
+            .yt-embed-text { font-size: 11px; }
+
             /* Support */
             .support-main-grid { grid-template-columns: 1fr; }
 
@@ -1840,6 +2030,7 @@
         <ul class="nav-links">
             <li><a href="#updates" id="nav-updates" style="display:none">Updates</a></li>
             <li><a href="#about">About</a></li>
+            <li><a href="#contents">Contents</a></li>
             <li><a href="#support">Support</a></li>
             <li><a href="#event" id="nav-event" style="display:none">Event</a></li>
             <li><a href="#shop">Shop</a></li>
@@ -1860,6 +2051,7 @@
     <ul>
         <li id="mobile-nav-updates" style="display:none"><a href="#updates" onclick="closeMenu()">Updates</a></li>
         <li><a href="#about" onclick="closeMenu()">About</a></li>
+        <li><a href="#contents" onclick="closeMenu()">Contents</a></li>
         <li><a href="#support" onclick="closeMenu()">Support</a></li>
         <li id="mobile-nav-event" style="display:none"><a href="#event" onclick="closeMenu()">Event</a></li>
         <li><a href="#shop" onclick="closeMenu()">Shop</a></li>
@@ -1896,7 +2088,7 @@
             二次創作 / オリジナルキャラクター / 同人誌 / 同人作品
         </p>
         <div class="hero-sns">
-            <a href="https://twitter.com/toki_ship8" target="_blank" rel="noopener" class="sns-btn" title="X (Twitter)">
+            <a href="https://twitter.com/toki_ship8" target="_blank" rel="noopener" class="sns-btn sns-btn-x" title="X (Twitter)">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
             </a>
             <a href="https://www.pixiv.net/users/14380777" target="_blank" rel="noopener" class="sns-btn" title="pixiv">
@@ -1911,8 +2103,11 @@
             <a href="https://note.com/toki_murasaki/" target="_blank" rel="noopener" class="sns-btn" title="note">
                 <img src="images/note.png" alt="note">
             </a>
-            <a href="https://www.youtube.com/@tokimurasaki" target="_blank" rel="noopener" class="sns-btn" title="YouTube">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            <a href="https://www.youtube.com/@tokimurasaki" target="_blank" rel="noopener" class="sns-btn sns-btn-yt" title="YouTube">
+                <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/>
+                    <path fill="#FFFFFF" d="M9.545 15.568V8.432L15.818 12z"/>
+                </svg>
             </a>
         </div>
         </div><!-- /.hero-text -->
@@ -1980,6 +2175,101 @@
 </section>
 
 <!-- ══════════════════════════════════════════
+     CONTENTS（活動を見る／無料で見られるもの）
+     ※ この下の SUPPORT（有料の支援サイト）へ繋げる順路
+══════════════════════════════════════════ -->
+<section class="sec" id="contents">
+    <div class="sec-inner">
+        <div class="sec-hd">
+            <p class="sec-label">Contents</p>
+            <h2 class="sec-title">活動を見る</h2>
+            <p class="sec-title-ja">無料で見られるコンテンツ</p>
+        </div>
+
+        <!-- ══════ ここから YouTube 最新動画ブロック ══════
+             チャンネルの「アップロード動画プレイリスト」を埋め込んでいるため、
+             動画を投稿すれば自動で最新版が先頭に来ます（APIキー不要）。
+             プレイリストIDは チャンネルID UCcuunZ9BIdaoLhQo1dVIj_A の
+             先頭2文字を UC → UU に変換したもの。書き換え不要。
+
+             【将来の差し替え】RSS(https://www.youtube.com/feeds/videos.xml?channel_id=UCcuunZ9BIdaoLhQo1dVIj_A)を
+             GitHub Actions で JSON 化して独自カード表示にする場合は、
+             この "ここから〜ここまで" の <div class="yt-latest"> ごと差し替えればOK。
+        ══════════════════════════════════════════════ -->
+        <div class="yt-latest">
+            <div class="yt-latest-hd">
+                <p class="yt-latest-label">Latest Video</p>
+                <p class="yt-latest-note">YouTubeの最新動画が自動で表示されます</p>
+            </div>
+            <!-- 初期表示ではiframeを読み込まず、クリックされて初めて読み込む（ページ表示速度対策） -->
+            <div class="yt-embed" id="yt-embed"
+                 data-src="https://www.youtube.com/embed/videoseries?list=UUcuunZ9BIdaoLhQo1dVIj_A">
+                <button type="button" class="yt-embed-poster" onclick="loadYouTubeEmbed()"
+                        aria-label="YouTubeの最新動画を再生する">
+                    <span class="yt-embed-play" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
+                    </span>
+                    <span class="yt-embed-text">クリックで最新動画を再生</span>
+                </button>
+            </div>
+        </div>
+        <!-- ══════ ここまで YouTube 最新動画ブロック ══════ -->
+
+        <div class="contents-grid">
+            <!-- note（大）: data/note.json の最新記事を管理ページから更新できます -->
+            <div class="contents-cell" id="note-slot"></div>
+
+            <!-- YouTube（大） -->
+            <a href="https://www.youtube.com/@tokimurasaki" target="_blank" rel="noopener"
+               class="contents-card contents-card-yt">
+                <div class="contents-visual">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/>
+                        <path fill="#FFFFFF" d="M9.545 15.568V8.432L15.818 12z"/>
+                    </svg>
+                </div>
+                <div class="contents-body">
+                    <p class="contents-label">YouTube</p>
+                    <p class="contents-title">イラスト制作の動画を公開中</p>
+                    <p class="contents-desc">メイキングや制作の様子をお届けしています。</p>
+                    <span class="contents-cta">チャンネルを見る <span>→</span></span>
+                </div>
+            </a>
+
+            <!-- pixiv（小・控えめ） -->
+            <a href="https://www.pixiv.net/users/14380777" target="_blank" rel="noopener"
+               class="contents-card contents-card-pixiv contents-card-sm">
+                <div class="contents-visual"><img src="images/pixiv.png" alt="pixiv"></div>
+                <div class="contents-body">
+                    <p class="contents-label">pixiv</p>
+                    <p class="contents-title">イラスト作品をまとめて見る</p>
+                </div>
+                <span class="contents-arrow">→</span>
+            </a>
+
+            <!-- ▼ Instagram（準備中）
+                 【有効化する手順】アカウントのURLが決まったら
+                  1) 下の <div ...> を次の形に置き換える
+                     <a href="https://www.instagram.com/＿＿＿/" target="_blank" rel="noopener" class="contents-card contents-card-ig contents-card-sm">
+                     （閉じタグ </div> も </a> に変更／is-soon クラスは外す）
+                  2) <span class="contents-soon">準備中 / Coming Soon</span> の行を削除する
+                  3) <span class="contents-arrow">→</span> の行のコメントを外す                     -->
+            <div class="contents-card contents-card-ig contents-card-sm is-soon" aria-disabled="true">
+                <div class="contents-visual">
+                    <svg viewBox="0 0 24 24" fill="#dd2a7b" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07zm0 6.16a3.68 3.68 0 1 0 0 7.36 3.68 3.68 0 0 0 0-7.36zm0 6.07a2.39 2.39 0 1 1 0-4.78 2.39 2.39 0 0 1 0 4.78zm4.69-6.22a.86.86 0 1 1-1.72 0 .86.86 0 0 1 1.72 0z"/></svg>
+                </div>
+                <div class="contents-body">
+                    <p class="contents-label">Instagram</p>
+                    <p class="contents-title">イラストのアーカイブ</p>
+                </div>
+                <!-- <span class="contents-arrow">→</span> -->
+                <span class="contents-soon">準備中 / Coming Soon</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════
      SUPPORT
 ══════════════════════════════════════════ -->
 <section class="sec" id="support">
@@ -2027,8 +2317,7 @@
             <!-- Fantia 最新記事 -->
             <div class="snews-slot" id="snews-fantia"></div>
         </div>
-        <!-- note 記事（補助的な導線・data/note.json を管理ページから編集） -->
-        <div class="note-slot" id="note-slot"></div>
+        <!-- note 記事は「活動を見る（#contents）」セクションへ移動しました -->
     </div>
 </section>
 
@@ -2337,7 +2626,7 @@
                 </div>
             </div>
             <div class="footer-sns">
-                <a href="https://twitter.com/toki_ship8" target="_blank" rel="noopener" class="sns-btn" title="X">
+                <a href="https://twitter.com/toki_ship8" target="_blank" rel="noopener" class="sns-btn sns-btn-x" title="X">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                 </a>
                 <a href="https://www.pixiv.net/users/14380777" target="_blank" rel="noopener" class="sns-btn" title="pixiv">
@@ -2352,8 +2641,11 @@
                 <a href="https://note.com/toki_murasaki/" target="_blank" rel="noopener" class="sns-btn" title="note">
                     <img src="images/note.png" alt="note">
                 </a>
-                <a href="https://www.youtube.com/@tokimurasaki" target="_blank" rel="noopener" class="sns-btn" title="YouTube">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                <a href="https://www.youtube.com/@tokimurasaki" target="_blank" rel="noopener" class="sns-btn sns-btn-yt" title="YouTube">
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/>
+                        <path fill="#FFFFFF" d="M9.545 15.568V8.432L15.818 12z"/>
+                    </svg>
                 </a>
             </div>
         </div>
@@ -2785,26 +3077,61 @@ const JP_HOLIDAYS = new Set([
 (async function loadNoteCard() {
     const slot = document.getElementById('note-slot');
     if (!slot) return;
+
+    const NOTE_PROFILE = 'https://note.com/toki_murasaki/';
+    const visual = `<div class="contents-visual"><img src="images/note.png" alt="note"></div>`;
+
+    let url = NOTE_PROFILE;
+    let title = 'ノウハウ記事・活動の記録を公開中';
+    let badge = '';
+
     try {
         const res = await fetch('data/note.json');
         if (!res.ok) throw new Error();
         const data = await res.json();
         if (!data.title || !data.url) throw new Error();
-
-        const a = document.createElement('a');
-        a.href = data.url;
-        a.target = '_blank';
-        a.rel = 'noopener';
-        a.className = 'note-card';
-        a.innerHTML =
-            `<span class="note-badge">note</span>` +
-            `<span class="note-title">${data.title}</span>` +
-            `<span class="note-arrow">→</span>`;
-        slot.appendChild(a);
+        url = data.url;
+        title = data.title;
+        badge = `<span class="contents-badge">最新記事</span>`;
     } catch (_) {
-        slot.style.display = 'none';
+        // 読み込めなかった場合も note のプロフィールへの導線は残す
     }
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.className = 'contents-card contents-card-note';
+    a.innerHTML =
+        visual +
+        `<div class="contents-body">` +
+          badge +
+          `<p class="contents-label">note</p>` +
+          `<p class="contents-title">${title}</p>` +
+          `<span class="contents-cta">noteを読む <span>→</span></span>` +
+        `</div>`;
+    slot.appendChild(a);
 })();
+
+// ── YouTube 最新動画：クリックされてから iframe を読み込む（初期表示を軽くする） ──
+function loadYouTubeEmbed() {
+    const box = document.getElementById('yt-embed');
+    if (!box || box.dataset.loaded) return;
+    box.dataset.loaded = '1';
+
+    const iframe = document.createElement('iframe');
+    // data-src の値がアップロード動画プレイリストの埋め込みURL（自動で最新動画が先頭）
+    // autoplay は「クリック済み」なので付与している
+    iframe.src = box.dataset.src + '&autoplay=1';
+    iframe.title = '村咲とき YouTube 最新動画';
+    iframe.loading = 'lazy';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.allowFullscreen = true;
+    iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+
+    box.innerHTML = '';
+    box.appendChild(iframe);
+}
 </script>
 
 </body>
