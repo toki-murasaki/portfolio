@@ -706,14 +706,15 @@
         a.contents-card-note:hover  { border-color: #41c9b4; }
         a.contents-card-yt:hover    { border-color: #ff0000; }
         a.contents-card-pixiv:hover { border-color: #0096fa; }
+        /* サムネイルではなくアイコンを置くだけの帯なので、高さは控えめに保つ */
         .contents-visual {
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 168px;
+            height: 84px;
         }
         .contents-visual img,
-        .contents-visual svg { width: 54px; height: 54px; object-fit: contain; }
+        .contents-visual svg { width: 40px; height: 40px; object-fit: contain; }
         .contents-card-note  .contents-visual { background: linear-gradient(135deg, rgba(65,201,180,0.18), rgba(65,201,180,0.04)); }
         .contents-card-yt    .contents-visual { background: linear-gradient(135deg, rgba(255,0,0,0.13), rgba(255,0,0,0.03)); }
         .contents-card-pixiv .contents-visual { background: linear-gradient(135deg, rgba(0,150,250,0.13), rgba(0,150,250,0.03)); }
@@ -1998,7 +1999,7 @@
 
             /* Contents（活動を見る） */
             .contents-grid { grid-template-columns: 1fr; }
-            .contents-visual { height: 150px; }
+            .contents-visual { height: 72px; }
             .yt-latest { margin-bottom: 20px; }
             .yt-embed-play { width: 54px; height: 38px; }
             .yt-embed-text { font-size: 11px; }
@@ -2286,8 +2287,8 @@
                 </div>
                 <div class="contents-body">
                     <p class="contents-label">YouTube</p>
-                    <p class="contents-title">イラスト制作の動画を公開中</p>
-                    <p class="contents-desc">メイキングや制作の様子をお届けしています。</p>
+                    <p class="contents-title">イラストメイキング動画等を公開中</p>
+                    <p class="contents-desc">小話付きのロング動画や変化を楽しめるショート動画をお届けしています。</p>
                     <span class="contents-cta">チャンネルを見る <span>→</span></span>
                 </div>
             </a>
