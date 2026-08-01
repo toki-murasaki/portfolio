@@ -1,14 +1,18 @@
 {
   "booth": {
-    "message": "C108新刊予約販売開始！"
+    "message": "C108新刊予約販売開始！",
+    "publishAt": ""
   },
   "melon": {
-    "message": "C108新刊予約販売開始！"
+    "message": "C108新刊予約販売開始！",
+    "publishAt": ""
   },
   "dlsite": {
-    "message": ""
+    "message": "",
+    "publishAt": ""
   },
   "fanza": {
-    "message": ""
+    "message": "",
+    "publishAt": ""
   }
 }

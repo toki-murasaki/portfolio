@@ -3011,6 +3011,58 @@ const JP_HOLIDAYS = new Set([
     container.querySelectorAll('.fade').forEach(el => io.observe(el));
 })();
 
+// ── 予約投稿（publishAt）共通ユーティリティ ──
+// publishAt は ISO 8601 形式（例: "2026-08-15T20:00:00+09:00"）。
+// 未設定・空文字・パース不能な値は「即時公開」として扱う。
+// 判定は閲覧者のブラウザ時刻で行う（サーバー側の処理を持たないため）。
+// 既存の NEW バッジ（date ベースの3日以内判定）とは独立した仕組みで、互いに干渉しない。
+
+// 旧形式（単体オブジェクト）の JSON も読めるように配列へ正規化する
+function toItemArray(data) {
+    if (Array.isArray(data)) return data.filter(v => v && typeof v === 'object');
+    if (data && typeof data === 'object') return [data];
+    return [];
+}
+
+// その項目が「今」公開されているか
+function isPublished(item) {
+    if (!item) return false;
+    if (!item.publishAt) return true;
+    const t = Date.parse(item.publishAt);
+    if (isNaN(t)) return true;
+    return t <= Date.now();
+}
+
+// 並び替え用の時刻。publishAt が無い項目は date（YYYY-MM-DD）で代用し、
+// どちらも無ければ 0（＝最も古い扱い）とする。
+function publishTime(item) {
+    if (!item) return 0;
+    if (item.publishAt) {
+        const t = Date.parse(item.publishAt);
+        if (!isNaN(t)) return t;
+    }
+    if (item.date) {
+        const p = String(item.date).split('-').map(Number);
+        if (p.length === 3 && p.every(n => !isNaN(n))) {
+            const d = new Date(p[0], p[1] - 1, p[2]);
+            if (!isNaN(d.getTime())) return d.getTime();
+        }
+    }
+    return 0;
+}
+
+// 公開済みの項目のうち、公開日時が最も新しいものを1件返す（無ければ null）。
+// 同時刻が並んだ場合は配列内で先にあるもの（＝後から追加したもの）を優先する。
+function pickLatestPublished(items) {
+    let best = null, bestTime = -Infinity;
+    toItemArray(items).forEach(item => {
+        if (!isPublished(item)) return;
+        const t = publishTime(item);
+        if (t > bestTime) { best = item; bestTime = t; }
+    });
+    return best;
+}
+
 // ── Updates ──
 (async function loadUpdates() {
     const section = document.getElementById('updates');
@@ -3022,6 +3074,10 @@ const JP_HOLIDAYS = new Set([
         items = await res.json();
         if (!Array.isArray(items) || items.length === 0) return;
     } catch { return; }
+
+    // 予約投稿：公開日時が未来の項目はまだ描画しない
+    items = items.filter(isPublished);
+    if (items.length === 0) return;
 
     // 表示時に日付（date）の降順でソート（新しい日付が上）
     items = items.slice().sort((a, b) => (b.date || '').localeCompare(a.date || ''));
@@ -3069,7 +3125,10 @@ const JP_HOLIDAYS = new Set([
         if (!res.ok) throw new Error();
         const data = await res.json();
         ['booth', 'melon', 'dlsite', 'fanza'].forEach(key => {
-            const msg = (data[key] && data[key].message || '').trim();
+            const shop = data[key];
+            // 予約投稿：公開日時が未来のメッセージはまだ表示しない
+            if (!shop || !isPublished(shop)) return;
+            const msg = (shop.message || '').trim();
             if (!msg) return;
             const card = document.getElementById(`shop-card-${key}`);
             if (!card) return;
@@ -3095,8 +3154,11 @@ const JP_HOLIDAYS = new Set([
         try {
             const res = await fetch(src.json);
             if (!res.ok) throw new Error();
-            const data = await res.json();
-            if (!data.title || !data.url) throw new Error();
+            const json = await res.json();
+            // 予約投稿：公開済みの項目のうち最も新しい1件を表示する。
+            // これにより予約分が公開時刻を迎えるまでは、それまでの記事が表示され続ける。
+            const data = pickLatestPublished(json);
+            if (!data || !data.title || !data.url) throw new Error();
 
             // date フィールドが今日から 0〜3 日以内なら NEW 表示
             // "YYYY-MM-DD" を UTC ではなくローカル時刻で解釈して比較
@@ -3118,7 +3180,7 @@ const JP_HOLIDAYS = new Set([
             a.rel = 'noopener';
             a.className = `snews-card snews-card-${src.id}`;
             a.innerHTML =
-                `<img class="snews-thumb" src="${data.thumb}" alt="${data.title}">` +
+                `<img class="snews-thumb" src="${data.thumb || data.thumbnail || ''}" alt="${data.title}">` +
                 `<div class="snews-body">` +
                   `<span class="snews-badge">最新記事</span>` +
                   `<p class="snews-label">${src.label}</p>` +
@@ -3147,8 +3209,9 @@ const JP_HOLIDAYS = new Set([
     try {
         const res = await fetch('data/note.json');
         if (!res.ok) throw new Error();
-        const data = await res.json();
-        if (!data.title || !data.url) throw new Error();
+        // 予約投稿：公開済みの項目のうち最も新しい1件を表示する
+        const data = pickLatestPublished(await res.json());
+        if (!data || !data.title || !data.url) throw new Error();
         url = data.url;
         title = data.title;
         badge = `<span class="contents-badge">最新記事</span>`;
