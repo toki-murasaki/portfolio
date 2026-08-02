@@ -1572,7 +1572,7 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            padding: 60px 20px 24px;
+            padding: 64px 16px 16px;
         }
         #lightbox.open { display: flex; }
         .lb-close {
@@ -1588,22 +1588,33 @@
             transition: all 0.25s;
         }
         .lb-close:hover { border-color: var(--accent); color: var(--accent); }
-        .lb-body { display: flex; flex-direction: column; align-items: center; max-width: 90vw; }
-        /* ステージは画像のレイアウトサイズにぴったり収まる。拡大時はここでクリップする */
+        .lb-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            flex: 1 1 auto;
+            min-height: 0;
+        }
+        /* ステージ＝表示に使える領域いっぱい。等倍では画像がこの中に収まり、
+           拡大するとステージの端まで画像が広がる（はみ出た分はここでクリップ） */
         .lb-stage {
+            flex: 1 1 auto;
+            width: 100%;
+            min-height: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
-            line-height: 0;
             touch-action: none;
             cursor: zoom-in;
         }
         .lb-stage.zoomed { cursor: grab; }
         .lb-stage.zoomed.panning { cursor: grabbing; }
-        /* ステージの寸法＝等倍画像の寸法にしたいので、幅は vw で直接指定する
-           （max-width:100% にするとステージ幅との循環参照になる） */
         #lb-img {
             display: block;
-            max-width: 86vw; max-height: 70vh;
-            transform-origin: 0 0;
+            max-width: 100%; max-height: 100%;
+            transform-origin: center center;
             transition: transform 0.18s ease-out;
             will-change: transform;
             user-select: none;
@@ -1612,8 +1623,11 @@
         /* ドラッグ・ピンチ中はアニメーションを切って追従させる */
         .lb-stage.panning #lb-img { transition: none; }
         .lb-zoom {
+            flex: none;
             display: flex;
             align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
             gap: 8px;
             margin-top: 12px;
         }
@@ -1640,17 +1654,17 @@
             min-width: 50px;
             text-align: center;
         }
+        /* 操作ヒントはズームバーの中に並べて、画像に使える高さを削らない */
         .lb-hint {
             font-family: var(--ja);
             font-size: 11px;
             font-weight: 300;
             color: rgba(255,255,255,0.35);
-            margin-top: 8px;
-            text-align: center;
+            margin-left: 4px;
         }
-        .lb-caption { margin-top: 14px; text-align: center; max-width: 600px; }
+        .lb-caption { flex: none; margin-top: 12px; text-align: center; max-width: 600px; }
         @media (max-width: 768px) {
-            #lb-img { max-height: 58vh; }
+            #lightbox { padding: 56px 10px 12px; }
             .lb-hint { display: none; }
         }
         #lb-title {
@@ -2796,8 +2810,8 @@
             <span id="lb-zoom-level">100%</span>
             <button type="button" id="lb-zoom-in" aria-label="拡大">＋</button>
             <button type="button" id="lb-zoom-reset">リセット</button>
+            <span class="lb-hint">ホイール / ダブルクリックで拡大、ドラッグで移動</span>
         </div>
-        <p class="lb-hint">ホイール / ダブルクリックで拡大、ドラッグで移動（スマホはピンチ操作）</p>
         <div class="lb-caption">
             <h4 id="lb-title"></h4>
             <p id="lb-comment"></p>
@@ -2913,11 +2927,13 @@ window.addEventListener('scroll', () => {
 })();
 
 // ── Lightbox ──
-// 画像は transform（translate + scale / origin は左上）で拡大する。
-// ステージ（.lb-stage）は等倍の画像とぴったり同じ大きさになるので、
-// 拡大分は overflow:hidden でクリップされ、平行移動で見たい位置を出す。
+// 画像は transform（translate + scale / origin は中央）で拡大する。
+// ステージ（.lb-stage）は表示に使える領域いっぱいに広がっているので、
+// 拡大すると画像はステージの端まで伸び、はみ出た分は overflow:hidden で
+// クリップされる。平行移動（lbTx / lbTy）で見たい位置を出す。
 const lbEl        = document.getElementById('lightbox');
 const lbStage     = document.getElementById('lb-stage');
+const lbBody      = document.querySelector('.lb-body');
 const lbImg       = document.getElementById('lb-img');
 const lbLevelEl   = document.getElementById('lb-zoom-level');
 const lbZoomInBtn = document.getElementById('lb-zoom-in');
@@ -2926,13 +2942,16 @@ const LB_MIN_SCALE = 1;
 const LB_MAX_SCALE = 6;
 
 let lbScale = 1, lbTx = 0, lbTy = 0;
+let lbDidDrag = false, lbDragEndAt = 0;
 
-// 拡大していないときは中央寄せ、拡大時は画像が枠から離れないように位置を丸める
+// lbTx / lbTy は「ステージ中央からの画像中心のずれ」。画像がステージより
+// 小さいうちは 0（中央）に固定し、大きいときだけ端が内側に入らない範囲で動かす。
 function lbApply() {
-    const w = lbStage.clientWidth, h = lbStage.clientHeight;
-    const sw = w * lbScale, sh = h * lbScale;
-    lbTx = sw <= w ? (w - sw) / 2 : Math.min(0, Math.max(w - sw, lbTx));
-    lbTy = sh <= h ? (h - sh) / 2 : Math.min(0, Math.max(h - sh, lbTy));
+    const sw = lbImg.clientWidth * lbScale, sh = lbImg.clientHeight * lbScale;
+    const limX = Math.max(0, (sw - lbStage.clientWidth) / 2);
+    const limY = Math.max(0, (sh - lbStage.clientHeight) / 2);
+    lbTx = Math.min(limX, Math.max(-limX, lbTx));
+    lbTy = Math.min(limY, Math.max(-limY, lbTy));
     lbImg.style.transform = `translate(${lbTx}px, ${lbTy}px) scale(${lbScale})`;
     lbStage.classList.toggle('zoomed', lbScale > 1);
     lbLevelEl.textContent = Math.round(lbScale * 100) + '%';
@@ -2940,14 +2959,20 @@ function lbApply() {
     lbZoomOutBtn.disabled = lbScale <= LB_MIN_SCALE + 0.001;
 }
 
-// (cx, cy) はステージ左上を原点とした「拡大の中心にしたい点」
+// (cx, cy) はステージ中央を原点とした「拡大の中心にしたい点」。省略時は中央。
 function lbZoomTo(next, cx, cy) {
     const s = Math.min(LB_MAX_SCALE, Math.max(LB_MIN_SCALE, next));
-    if (cx === undefined) { cx = lbStage.clientWidth / 2; cy = lbStage.clientHeight / 2; }
+    if (cx === undefined) { cx = 0; cy = 0; }
     lbTx = cx - (cx - lbTx) * (s / lbScale);
     lbTy = cy - (cy - lbTy) * (s / lbScale);
     lbScale = s;
     lbApply();
+}
+
+// クリック座標をステージ中央基準に直す
+function lbPointInStage(clientX, clientY) {
+    const r = lbStage.getBoundingClientRect();
+    return [clientX - r.left - r.width / 2, clientY - r.top - r.height / 2];
 }
 
 function lbResetZoom() {
@@ -2972,10 +2997,17 @@ function lbClose() {
     lbResetZoom();
 }
 
-// 背景（余白）のクリックだけで閉じる。ステージ内でのドラッグは
-// setPointerCapture により click の target がステージ側になるため誤爆しない。
+// 画像そのもの以外（背景・ステージの余白）のクリックで閉じる。
+// ドラッグ中は setPointerCapture により click の target がステージになるため、
+// パン操作の直後に来る click だけを弾く。タッチではドラッグ後に click が
+// 発火しないことがあるので、フラグは指を離してから短時間で失効させる。
 function closeLightbox(e) {
-    if (!e || e.target === lbEl) lbClose();
+    if (!e) { lbClose(); return; }
+    if (lbDidDrag) {
+        lbDidDrag = false;
+        if (performance.now() - lbDragEndAt < 300) return;
+    }
+    if (e.target === lbEl || e.target === lbStage || e.target === lbBody) lbClose();
 }
 
 // 画像サイズ確定後にステージ寸法が決まるので、読み込み完了時に再計算する
@@ -2988,13 +3020,13 @@ document.getElementById('lb-zoom-reset').addEventListener('click', lbResetZoom);
 
 lbStage.addEventListener('wheel', e => {
     e.preventDefault();
-    const r = lbStage.getBoundingClientRect();
-    lbZoomTo(lbScale * Math.exp(-e.deltaY * 0.0015), e.clientX - r.left, e.clientY - r.top);
+    const [cx, cy] = lbPointInStage(e.clientX, e.clientY);
+    lbZoomTo(lbScale * Math.exp(-e.deltaY * 0.0015), cx, cy);
 }, { passive: false });
 
 lbStage.addEventListener('dblclick', e => {
-    const r = lbStage.getBoundingClientRect();
-    lbZoomTo(lbScale > 1 ? 1 : 2.5, e.clientX - r.left, e.clientY - r.top);
+    const [cx, cy] = lbPointInStage(e.clientX, e.clientY);
+    lbZoomTo(lbScale > 1 ? 1 : 2.5, cx, cy);
 });
 
 // ドラッグでのパンと、2本指ピンチによる拡大
@@ -3005,6 +3037,7 @@ lbStage.addEventListener('pointerdown', e => {
     try { lbStage.setPointerCapture(e.pointerId); } catch {}
     lbPointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
     lbLastPoint = { x: e.clientX, y: e.clientY };
+    lbDidDrag = false;
     lbStage.classList.add('panning');
     if (lbPointers.size === 2) {
         const [a, b] = [...lbPointers.values()];
@@ -3016,20 +3049,22 @@ lbStage.addEventListener('pointerdown', e => {
 lbStage.addEventListener('pointermove', e => {
     if (!lbPointers.has(e.pointerId)) return;
     lbPointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
-    const r = lbStage.getBoundingClientRect();
 
     if (lbPointers.size >= 2) {
         const [a, b] = [...lbPointers.values()];
         const dist = Math.hypot(a.x - b.x, a.y - b.y);
         if (lbPinchDist > 0) {
-            lbZoomTo(lbPinchStart * (dist / lbPinchDist),
-                     (a.x + b.x) / 2 - r.left, (a.y + b.y) / 2 - r.top);
+            lbDidDrag = true;
+            const [cx, cy] = lbPointInStage((a.x + b.x) / 2, (a.y + b.y) / 2);
+            lbZoomTo(lbPinchStart * (dist / lbPinchDist), cx, cy);
         }
         return;
     }
 
-    if (!lbLastPoint || lbScale <= 1) return;
+    if (!lbLastPoint) return;
     const dx = e.clientX - lbLastPoint.x, dy = e.clientY - lbLastPoint.y;
+    if (Math.abs(dx) > 2 || Math.abs(dy) > 2) lbDidDrag = true;
+    if (lbScale <= 1) return;
     lbTx += dx; lbTy += dy;
     lbLastPoint = { x: e.clientX, y: e.clientY };
     lbApply();
@@ -3041,6 +3076,7 @@ function lbEndPointer(e) {
     if (lbPointers.size === 0) {
         lbStage.classList.remove('panning');
         lbLastPoint = null;
+        lbDragEndAt = performance.now();
     } else {
         const [p] = [...lbPointers.values()];
         lbLastPoint = { x: p.x, y: p.y };
