@@ -2322,6 +2322,10 @@
              プレイリストIDは チャンネルID UCcuunZ9BIdaoLhQo1dVIj_A の
              先頭2文字を UC → UU に変換したもの。書き換え不要。
 
+             【手動指定】data/youtube.json が mode:"manual" のときは
+             管理ページで指定した動画IDの埋め込みに差し替わります（下の loadYouTubeConfig）。
+             JSONが無い・壊れている場合は下記の自動表示にフォールバックします。
+
              【将来の差し替え】RSS(https://www.youtube.com/feeds/videos.xml?channel_id=UCcuunZ9BIdaoLhQo1dVIj_A)を
              GitHub Actions で JSON 化して独自カード表示にする場合は、
              この "ここから〜ここまで" の <div class="yt-latest"> ごと差し替えればOK。
@@ -3470,17 +3474,48 @@ function pickLatestPublished(items) {
     slot.appendChild(a);
 })();
 
+// ── YouTube 表示設定：手動指定があれば埋め込み先を差し替える ──
+// data/youtube.json が mode:"manual" かつ有効な動画IDを持つときだけ単体動画に切り替え、
+// それ以外（自動モード / IDが空 / JSONが無い / 通信失敗）は HTML に書いてある
+// アップロード動画プレイリスト（＝最新動画の自動表示）のままにする。
+const ytConfigReady = (async function loadYouTubeConfig() {
+    const box = document.getElementById('yt-embed');
+    if (!box) return;
+    try {
+        const res = await fetch('./data/youtube.json', { cache: 'no-cache' });
+        if (!res.ok) throw new Error();
+        const cfg = await res.json();
+        const id  = typeof cfg.manualVideoId === 'string' ? cfg.manualVideoId.trim() : '';
+        if (cfg.mode !== 'manual' || !/^[A-Za-z0-9_-]{11}$/.test(id)) return;
+
+        box.dataset.src = `https://www.youtube.com/embed/${id}`;
+        box.dataset.manual = '1';
+        // 手動指定中は「最新動画」という文言が実態と合わないので表記も合わせる
+        const note = document.querySelector('.yt-latest-note');
+        if (note) note.textContent = 'ピックアップ動画';
+        const label = document.querySelector('.yt-embed-text');
+        if (label) label.textContent = 'クリックで動画を再生';
+        const poster = document.querySelector('.yt-embed-poster');
+        if (poster) poster.setAttribute('aria-label', 'YouTubeの動画を再生する');
+    } catch (_) {
+        // 何もしない＝従来の自動表示のまま
+    }
+})();
+
 // ── YouTube 最新動画：クリックされてから iframe を読み込む（初期表示を軽くする） ──
-function loadYouTubeEmbed() {
+async function loadYouTubeEmbed() {
     const box = document.getElementById('yt-embed');
     if (!box || box.dataset.loaded) return;
     box.dataset.loaded = '1';
 
+    // 設定の読み込み完了前にクリックされても手動指定が反映されるよう待つ
+    await ytConfigReady;
+
     const iframe = document.createElement('iframe');
-    // data-src の値がアップロード動画プレイリストの埋め込みURL（自動で最新動画が先頭）
-    // autoplay は「クリック済み」なので付与している
-    iframe.src = box.dataset.src + '&autoplay=1';
-    iframe.title = '村咲とき YouTube 最新動画';
+    // data-src の値が埋め込みURL（自動＝アップロード動画プレイリスト / 手動＝単体動画）
+    // autoplay は「クリック済み」なので付与している。プレイリスト側は既に ? を含むため区切り文字を出し分ける
+    iframe.src = box.dataset.src + (box.dataset.src.includes('?') ? '&' : '?') + 'autoplay=1';
+    iframe.title = box.dataset.manual ? '村咲とき YouTube 動画' : '村咲とき YouTube 最新動画';
     iframe.loading = 'lazy';
     iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
     iframe.allowFullscreen = true;
