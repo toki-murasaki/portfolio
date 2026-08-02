@@ -1589,8 +1589,70 @@
         }
         .lb-close:hover { border-color: var(--accent); color: var(--accent); }
         .lb-body { display: flex; flex-direction: column; align-items: center; max-width: 90vw; }
-        #lb-img { max-width: 100%; max-height: 72vh; object-fit: contain; }
+        /* ステージは画像のレイアウトサイズにぴったり収まる。拡大時はここでクリップする */
+        .lb-stage {
+            overflow: hidden;
+            line-height: 0;
+            touch-action: none;
+            cursor: zoom-in;
+        }
+        .lb-stage.zoomed { cursor: grab; }
+        .lb-stage.zoomed.panning { cursor: grabbing; }
+        /* ステージの寸法＝等倍画像の寸法にしたいので、幅は vw で直接指定する
+           （max-width:100% にするとステージ幅との循環参照になる） */
+        #lb-img {
+            display: block;
+            max-width: 86vw; max-height: 70vh;
+            transform-origin: 0 0;
+            transition: transform 0.18s ease-out;
+            will-change: transform;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+        /* ドラッグ・ピンチ中はアニメーションを切って追従させる */
+        .lb-stage.panning #lb-img { transition: none; }
+        .lb-zoom {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .lb-zoom button {
+            background: none;
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 999px;
+            color: rgba(255,255,255,0.7);
+            font-family: var(--ja);
+            font-size: 13px;
+            line-height: 1;
+            height: 34px;
+            min-width: 34px;
+            padding: 0 12px;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.25s;
+        }
+        .lb-zoom button:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+        .lb-zoom button:disabled { opacity: 0.3; cursor: default; }
+        #lb-zoom-level {
+            font-family: var(--en);
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+            min-width: 50px;
+            text-align: center;
+        }
+        .lb-hint {
+            font-family: var(--ja);
+            font-size: 11px;
+            font-weight: 300;
+            color: rgba(255,255,255,0.35);
+            margin-top: 8px;
+            text-align: center;
+        }
         .lb-caption { margin-top: 14px; text-align: center; max-width: 600px; }
+        @media (max-width: 768px) {
+            #lb-img { max-height: 58vh; }
+            .lb-hint { display: none; }
+        }
         #lb-title {
             font-family: var(--ja);
             font-size: 15px;
@@ -2724,9 +2786,18 @@
 
 <!-- Lightbox -->
 <div id="lightbox" role="dialog" aria-modal="true" onclick="closeLightbox(event)">
-    <button class="lb-close" onclick="document.getElementById('lightbox').classList.remove('open')" aria-label="閉じる">✕</button>
+    <button class="lb-close" onclick="lbClose()" aria-label="閉じる">✕</button>
     <div class="lb-body">
-        <img id="lb-img" src="" alt="">
+        <div class="lb-stage" id="lb-stage">
+            <img id="lb-img" src="" alt="" draggable="false">
+        </div>
+        <div class="lb-zoom" role="group" aria-label="画像の拡大・縮小">
+            <button type="button" id="lb-zoom-out" aria-label="縮小">−</button>
+            <span id="lb-zoom-level">100%</span>
+            <button type="button" id="lb-zoom-in" aria-label="拡大">＋</button>
+            <button type="button" id="lb-zoom-reset">リセット</button>
+        </div>
+        <p class="lb-hint">ホイール / ダブルクリックで拡大、ドラッグで移動（スマホはピンチ操作）</p>
         <div class="lb-caption">
             <h4 id="lb-title"></h4>
             <p id="lb-comment"></p>
@@ -2831,11 +2902,7 @@ window.addEventListener('scroll', () => {
 
         wrap.addEventListener('click', () => {
             if (img.complete && img.naturalWidth > 0) {
-                document.getElementById('lb-img').src         = img.src;
-                document.getElementById('lb-img').alt         = item.title;
-                document.getElementById('lb-title').textContent   = item.title;
-                document.getElementById('lb-comment').textContent = item.comment || '';
-                document.getElementById('lightbox').classList.add('open');
+                openLightbox(img.src, item.title, item.title, item.comment || '');
             }
         });
 
@@ -2846,13 +2913,148 @@ window.addEventListener('scroll', () => {
 })();
 
 // ── Lightbox ──
+// 画像は transform（translate + scale / origin は左上）で拡大する。
+// ステージ（.lb-stage）は等倍の画像とぴったり同じ大きさになるので、
+// 拡大分は overflow:hidden でクリップされ、平行移動で見たい位置を出す。
+const lbEl        = document.getElementById('lightbox');
+const lbStage     = document.getElementById('lb-stage');
+const lbImg       = document.getElementById('lb-img');
+const lbLevelEl   = document.getElementById('lb-zoom-level');
+const lbZoomInBtn = document.getElementById('lb-zoom-in');
+const lbZoomOutBtn= document.getElementById('lb-zoom-out');
+const LB_MIN_SCALE = 1;
+const LB_MAX_SCALE = 6;
+
+let lbScale = 1, lbTx = 0, lbTy = 0;
+
+// 拡大していないときは中央寄せ、拡大時は画像が枠から離れないように位置を丸める
+function lbApply() {
+    const w = lbStage.clientWidth, h = lbStage.clientHeight;
+    const sw = w * lbScale, sh = h * lbScale;
+    lbTx = sw <= w ? (w - sw) / 2 : Math.min(0, Math.max(w - sw, lbTx));
+    lbTy = sh <= h ? (h - sh) / 2 : Math.min(0, Math.max(h - sh, lbTy));
+    lbImg.style.transform = `translate(${lbTx}px, ${lbTy}px) scale(${lbScale})`;
+    lbStage.classList.toggle('zoomed', lbScale > 1);
+    lbLevelEl.textContent = Math.round(lbScale * 100) + '%';
+    lbZoomInBtn.disabled  = lbScale >= LB_MAX_SCALE - 0.001;
+    lbZoomOutBtn.disabled = lbScale <= LB_MIN_SCALE + 0.001;
+}
+
+// (cx, cy) はステージ左上を原点とした「拡大の中心にしたい点」
+function lbZoomTo(next, cx, cy) {
+    const s = Math.min(LB_MAX_SCALE, Math.max(LB_MIN_SCALE, next));
+    if (cx === undefined) { cx = lbStage.clientWidth / 2; cy = lbStage.clientHeight / 2; }
+    lbTx = cx - (cx - lbTx) * (s / lbScale);
+    lbTy = cy - (cy - lbTy) * (s / lbScale);
+    lbScale = s;
+    lbApply();
+}
+
+function lbResetZoom() {
+    lbScale = 1; lbTx = 0; lbTy = 0;
+    lbImg.style.transition = 'none';
+    lbApply();
+    void lbImg.offsetWidth;   // 強制リフロー。次の操作からアニメーションを復帰させる
+    lbImg.style.transition = '';
+}
+
+function openLightbox(src, alt, title, comment) {
+    lbImg.src = src;
+    lbImg.alt = alt || '';
+    document.getElementById('lb-title').textContent   = title || '';
+    document.getElementById('lb-comment').textContent = comment || '';
+    lbEl.classList.add('open');
+    lbResetZoom();
+}
+
+function lbClose() {
+    lbEl.classList.remove('open');
+    lbResetZoom();
+}
+
+// 背景（余白）のクリックだけで閉じる。ステージ内でのドラッグは
+// setPointerCapture により click の target がステージ側になるため誤爆しない。
 function closeLightbox(e) {
-    if (!e || e.target === document.getElementById('lightbox')) {
-        document.getElementById('lightbox').classList.remove('open');
+    if (!e || e.target === lbEl) lbClose();
+}
+
+// 画像サイズ確定後にステージ寸法が決まるので、読み込み完了時に再計算する
+lbImg.addEventListener('load', lbResetZoom);
+window.addEventListener('resize', () => { if (lbEl.classList.contains('open')) lbApply(); });
+
+lbZoomInBtn.addEventListener('click',  () => lbZoomTo(lbScale * 1.5));
+lbZoomOutBtn.addEventListener('click', () => lbZoomTo(lbScale / 1.5));
+document.getElementById('lb-zoom-reset').addEventListener('click', lbResetZoom);
+
+lbStage.addEventListener('wheel', e => {
+    e.preventDefault();
+    const r = lbStage.getBoundingClientRect();
+    lbZoomTo(lbScale * Math.exp(-e.deltaY * 0.0015), e.clientX - r.left, e.clientY - r.top);
+}, { passive: false });
+
+lbStage.addEventListener('dblclick', e => {
+    const r = lbStage.getBoundingClientRect();
+    lbZoomTo(lbScale > 1 ? 1 : 2.5, e.clientX - r.left, e.clientY - r.top);
+});
+
+// ドラッグでのパンと、2本指ピンチによる拡大
+const lbPointers = new Map();
+let lbPinchDist = 0, lbPinchStart = 1, lbLastPoint = null;
+
+lbStage.addEventListener('pointerdown', e => {
+    try { lbStage.setPointerCapture(e.pointerId); } catch {}
+    lbPointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    lbLastPoint = { x: e.clientX, y: e.clientY };
+    lbStage.classList.add('panning');
+    if (lbPointers.size === 2) {
+        const [a, b] = [...lbPointers.values()];
+        lbPinchDist  = Math.hypot(a.x - b.x, a.y - b.y);
+        lbPinchStart = lbScale;
+    }
+});
+
+lbStage.addEventListener('pointermove', e => {
+    if (!lbPointers.has(e.pointerId)) return;
+    lbPointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    const r = lbStage.getBoundingClientRect();
+
+    if (lbPointers.size >= 2) {
+        const [a, b] = [...lbPointers.values()];
+        const dist = Math.hypot(a.x - b.x, a.y - b.y);
+        if (lbPinchDist > 0) {
+            lbZoomTo(lbPinchStart * (dist / lbPinchDist),
+                     (a.x + b.x) / 2 - r.left, (a.y + b.y) / 2 - r.top);
+        }
+        return;
+    }
+
+    if (!lbLastPoint || lbScale <= 1) return;
+    const dx = e.clientX - lbLastPoint.x, dy = e.clientY - lbLastPoint.y;
+    lbTx += dx; lbTy += dy;
+    lbLastPoint = { x: e.clientX, y: e.clientY };
+    lbApply();
+});
+
+function lbEndPointer(e) {
+    lbPointers.delete(e.pointerId);
+    if (lbPointers.size < 2) lbPinchDist = 0;
+    if (lbPointers.size === 0) {
+        lbStage.classList.remove('panning');
+        lbLastPoint = null;
+    } else {
+        const [p] = [...lbPointers.values()];
+        lbLastPoint = { x: p.x, y: p.y };
     }
 }
+lbStage.addEventListener('pointerup', lbEndPointer);
+lbStage.addEventListener('pointercancel', lbEndPointer);
+
 document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
+    if (e.key === 'Escape') { lbClose(); return; }
+    if (!lbEl.classList.contains('open')) return;
+    if (e.key === '+' || e.key === '=') { e.preventDefault(); lbZoomTo(lbScale * 1.5); }
+    else if (e.key === '-')             { e.preventDefault(); lbZoomTo(lbScale / 1.5); }
+    else if (e.key === '0')             { e.preventDefault(); lbResetZoom(); }
 });
 
 // ── Intersection Observer (fade-in) ──
@@ -2987,11 +3189,7 @@ const JP_HOLIDAYS = new Set([
                 img.onerror = () => { thumb.style.display = 'none'; };
                 thumb.appendChild(img);
                 thumb.addEventListener('click', () => {
-                    document.getElementById('lb-img').src             = src;
-                    document.getElementById('lb-img').alt             = `お品書き ${i + 1}`;
-                    document.getElementById('lb-title').textContent   = ev.name;
-                    document.getElementById('lb-comment').textContent = `お品書き ${i + 1}`;
-                    document.getElementById('lightbox').classList.add('open');
+                    openLightbox(src, `お品書き ${i + 1}`, ev.name, `お品書き ${i + 1}`);
                 });
                 imgWrap.appendChild(thumb);
             });
