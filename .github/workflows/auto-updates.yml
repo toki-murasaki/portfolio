@@ -1,0 +1,36 @@
+name: 更新情報の自動追加
+
+# push では絶対に発火させない。
+# このワークフロー自身が data/*.json を書き換えるため、push で走らせると無限ループになる。
+on:
+  schedule:
+    - cron: '*/30 * * * *'   # 30分おき（UTC基準だが間隔なので時差は影響しない）
+  workflow_dispatch:          # 手動実行（cron を待たずにテストできる）
+
+# Contents API でファイルを書き換えるため書き込み権限が必要。
+permissions:
+  contents: write
+
+# 実行が重なって同じファイルを取り合わないようにする。
+concurrency:
+  group: auto-updates
+  cancel-in-progress: false
+
+jobs:
+  check-feeds:
+    runs-on: ubuntu-latest
+    steps:
+      - name: リポジトリを取得
+        uses: actions/checkout@v4
+
+      - name: Node.js をセットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: RSS を確認して更新情報を追加
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          TARGET_BRANCH: main
+        run: node scripts/auto-updates.mjs
