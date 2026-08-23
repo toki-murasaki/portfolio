@@ -1,6 +1,18 @@
 [
   {
     "date": "2026-08-23",
+    "text": "YouTubeにショート動画が投稿されました。",
+    "link": "https://youtube.com/shorts/DNQ--FXQ2Zs",
+    "source": "auto"
+  },
+  {
+    "date": "2026-08-23",
+    "text": "noteに記事を公開しました。",
+    "link": "https://note.com/toki_murasaki/n/ndac2dc0e83d8",
+    "source": "auto"
+  },
+  {
+    "date": "2026-08-23",
     "text": "YouTubeに動画が投稿されました。",
     "link": "https://youtu.be/DIWUF6H3u_Y",
     "source": "auto"
