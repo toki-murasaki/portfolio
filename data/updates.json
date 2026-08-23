@@ -1,6 +1,12 @@
 [
   {
     "date": "2026-08-23",
+    "text": "YouTubeに動画が投稿されました。",
+    "link": "https://youtu.be/oB9FB2igzME",
+    "source": "auto"
+  },
+  {
+    "date": "2026-08-23",
     "text": "YouTubeにショート動画が投稿されました。",
     "link": "https://youtube.com/shorts/DNQ--FXQ2Zs",
     "source": "auto"
