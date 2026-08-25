@@ -1,22 +1,22 @@
 [
   {
-    "date": "2026-08-15",
-    "weekday": "土",
-    "name": "コミックマーケット108",
-    "venue": "東京ビッグサイト",
-    "images": [
-      "https://toki-murasaki.github.io/portfolio/images/event-oshinagaki1.jpg",
-      "https://toki-murasaki.github.io/portfolio/images/event-oshinagaki2.jpg"
-    ],
-    "link_url": "https://tokinchi.booth.pm/",
-    "link_label": "事後通販受付中※8月24日まで"
-  },
-  {
     "date": "2026-11-14",
     "weekday": "土",
     "name": "VGGC12th",
     "venue": "東京流通センター",
     "images": [],
+    "link_url": "https://vggc.info/",
+    "link_label": "イベント公式サイト"
+  },
+  {
+    "date": "2026-12-30",
+    "weekday": "水",
+    "name": "コミックマーケット109",
+    "venue": "東京ビッグサイト",
+    "images": [
+      "https://toki-murasaki.github.io/portfolio/images/event2-oshinagaki1.png",
+      "https://toki-murasaki.github.io/portfolio/images/event2-oshinagaki2.png"
+    ],
     "link_url": "",
     "link_label": ""
   }
