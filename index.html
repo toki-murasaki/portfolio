@@ -519,7 +519,7 @@
             transition: background 0.25s, color 0.25s, border-color 0.25s;
         }
         .tag-link img {
-            width: 15px; height: 15px;
+            width: 18px; height: 18px;
             object-fit: contain;
             flex-shrink: 0;
         }
@@ -528,9 +528,23 @@
             border-color: var(--accent-t);
             color: #fff;
         }
-        /* セクション見出し右の余白に絶対配置し、About の高さに影響を与えない */
+        /* 質問箱リンクは HTML 上に2か所ある（見出し右／自己紹介文の下）。
+           1024px 未満は見出し右の余白へ絶対配置、1024px 以上は自己紹介文の下に置く。
+           どちらも About セクションの高さを変えない位置に収めている。 */
         #about .sec-hd { position: relative; }
-        .about-ask { position: absolute; right: 0; bottom: 0; }
+        .about-ask-hd { position: absolute; right: 0; bottom: 0; }
+        .about-ask-inline { display: none; }
+        @media (min-width: 1024px) {
+            .about-ask-hd { display: none; }
+            .about-ask-inline {
+                display: inline-flex;
+                margin-top: 16px;
+                padding: 8px 16px 8px 12px;
+                font-size: 12px;
+                gap: 8px;
+            }
+            .about-ask-inline img { width: 21px; height: 21px; }
+        }
 
         /* ─── OC Section ─── */
         #oc { background: var(--bg2); }
@@ -2293,8 +2307,8 @@
             <p class="sec-label">About</p>
             <h2 class="sec-title">Profile</h2>
             <p class="sec-title-ja">プロフィール</p>
-            <!-- ここを編集: マシュマロ（質問箱）へのリンク -->
-            <a class="tag tag-link about-ask"
+            <!-- ここを編集: マシュマロ（質問箱）へのリンク（スマホ・タブレット用 / URL を変えるときは下の PC 用も一緒に直す） -->
+            <a class="tag tag-link about-ask-hd"
                href="https://marshmallow-qa.com/9i2h227aql8y7u5?t=x9GB58&amp;utm_medium=url_text&amp;utm_source=promotion"
                target="_blank" rel="noopener">
                 <img src="images/marshmallow.png" alt="">ご質問はお気軽にどうぞ
@@ -2331,6 +2345,12 @@
                     <span class="tag">同人誌</span>
                     <span class="tag">デジタル彩色</span>
                 </div>
+                <!-- ここを編集: マシュマロ（質問箱）へのリンク（PC 用 / URL を変えるときは上のスマホ用も一緒に直す） -->
+                <a class="tag tag-link about-ask-inline"
+                   href="https://marshmallow-qa.com/9i2h227aql8y7u5?t=x9GB58&amp;utm_medium=url_text&amp;utm_source=promotion"
+                   target="_blank" rel="noopener">
+                    <img src="images/marshmallow.png" alt="">ご質問はお気軽にどうぞ
+                </a>
             </div>
         </div>
     </div>
