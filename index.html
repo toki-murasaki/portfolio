@@ -508,6 +508,29 @@
             letter-spacing: 0.04em;
         }
         .tag.a { border-color: var(--accent-t); color: var(--accent-t); }
+        /* マシュマロ（質問箱）へのリンク: 既存 .tag の意匠に合わせたピル型 */
+        .tag-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding-left: 9px;
+            border-color: var(--accent-t);
+            color: var(--accent-t);
+            transition: background 0.25s, color 0.25s, border-color 0.25s;
+        }
+        .tag-link img {
+            width: 15px; height: 15px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+        .tag-link:hover {
+            background: var(--accent-t);
+            border-color: var(--accent-t);
+            color: #fff;
+        }
+        /* セクション見出し右の余白に絶対配置し、About の高さに影響を与えない */
+        #about .sec-hd { position: relative; }
+        .about-ask { position: absolute; right: 0; bottom: 0; }
 
         /* ─── OC Section ─── */
         #oc { background: var(--bg2); }
@@ -2270,6 +2293,12 @@
             <p class="sec-label">About</p>
             <h2 class="sec-title">Profile</h2>
             <p class="sec-title-ja">プロフィール</p>
+            <!-- ここを編集: マシュマロ（質問箱）へのリンク -->
+            <a class="tag tag-link about-ask"
+               href="https://marshmallow-qa.com/9i2h227aql8y7u5?t=x9GB58&amp;utm_medium=url_text&amp;utm_source=promotion"
+               target="_blank" rel="noopener">
+                <img src="images/marshmallow.png" alt="">ご質問はお気軽にどうぞ
+            </a>
         </div>
         <div class="about-grid">
             <div class="about-img-wrap">
@@ -2871,7 +2900,9 @@ window.addEventListener('scroll', () => {
     const grid    = document.getElementById('gallery-grid');
     let galleryImages;
     try {
-        const res = await fetch('./data/gallery.json');
+        // 画像 URL の版番号は gallery.json 側に入っている。JSON 自体が
+        // キャッシュされていると差し替えに気付けないので、常に検証させる。
+        const res = await fetch('./data/gallery.json', { cache: 'no-cache' });
         if (!res.ok) throw new Error();
         galleryImages = await res.json();
         if (!Array.isArray(galleryImages) || galleryImages.length === 0) throw new Error();
@@ -2911,7 +2942,7 @@ window.addEventListener('scroll', () => {
             imgWrap.innerHTML = `
                 <div class="gallery-ph">
                     <div class="gallery-ph-icon">🖼</div>
-                    <span>${item.src.split('/').pop()}</span>
+                    <span>${item.src.split('?')[0].split('/').pop()}</span>
                     <span style="font-size:10px;color:var(--text3)">未設定</span>
                 </div>
             `;
