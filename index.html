@@ -498,32 +498,25 @@
             line-height: 1.85;
             margin-bottom: 8px;
         }
-        .about-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-        .tag {
-            padding: 5px 13px;
-            border: 1px solid var(--border2);
-            border-radius: 2px;
-            font-size: 11px;
-            color: var(--text2);
-            letter-spacing: 0.04em;
-        }
-        .tag.a { border-color: var(--accent-t); color: var(--accent-t); }
-        /* マシュマロ（質問箱）へのリンク: 既存 .tag の意匠に合わせたピル型 */
-        .tag-link {
+        /* マシュマロ（質問箱）へのリンク */
+        .about-ask {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding-left: 9px;
-            border-color: var(--accent-t);
+            padding: 5px 13px 5px 9px;
+            border: 1px solid var(--accent-t);
+            border-radius: 2px;
+            font-size: 11px;
+            letter-spacing: 0.04em;
             color: var(--accent-t);
             transition: background 0.25s, color 0.25s, border-color 0.25s;
         }
-        .tag-link img {
+        .about-ask img {
             width: 18px; height: 18px;
             object-fit: contain;
             flex-shrink: 0;
         }
-        .tag-link:hover {
+        .about-ask:hover {
             background: var(--accent-t);
             border-color: var(--accent-t);
             color: #fff;
@@ -2308,7 +2301,7 @@
             <h2 class="sec-title">Profile</h2>
             <p class="sec-title-ja">プロフィール</p>
             <!-- ここを編集: マシュマロ（質問箱）へのリンク（スマホ・タブレット用 / URL を変えるときは下の PC 用も一緒に直す） -->
-            <a class="tag tag-link about-ask-hd"
+            <a class="about-ask about-ask-hd"
                href="https://marshmallow-qa.com/9i2h227aql8y7u5?t=x9GB58&amp;utm_medium=url_text&amp;utm_source=promotion"
                target="_blank" rel="noopener">
                 <img src="images/marshmallow.png" alt="">ご質問はお気軽にどうぞ
@@ -2337,16 +2330,8 @@
                     FANBOXやFantiaでは制作の裏側や限定コンテンツを配信中です。
                     応援していただけるととても励みになります。
                 </p>
-                <!-- ここを編集: タグ（span タグを増やして追加、削除も自由） -->
-                <div class="about-tags">
-                    <span class="tag a">イラストレーター</span>
-                    <span class="tag">オリジナルキャラクター</span>
-                    <span class="tag">CG集</span>
-                    <span class="tag">同人誌</span>
-                    <span class="tag">デジタル彩色</span>
-                </div>
                 <!-- ここを編集: マシュマロ（質問箱）へのリンク（PC 用 / URL を変えるときは上のスマホ用も一緒に直す） -->
-                <a class="tag tag-link about-ask-inline"
+                <a class="about-ask about-ask-inline"
                    href="https://marshmallow-qa.com/9i2h227aql8y7u5?t=x9GB58&amp;utm_medium=url_text&amp;utm_source=promotion"
                    target="_blank" rel="noopener">
                     <img src="images/marshmallow.png" alt="">ご質問はお気軽にどうぞ
