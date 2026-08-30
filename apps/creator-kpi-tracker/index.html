@@ -26,6 +26,9 @@
   ul { margin: 0 0 16px; padding-left: 1.4em; }
   li { margin-bottom: 8px; }
   a { color: #1666b0; }
+  code { font-family: Consolas, "Courier New", monospace; font-size: 0.9em;
+         background: #f2f2f2; border: 1px solid #e0e0e0; border-radius: 3px;
+         padding: 1px 5px; word-break: break-all; }
   .lead { color: #555; margin-bottom: 32px; }
   .note {
     background: #f7f7f7;
@@ -51,12 +54,15 @@
     <li>記録したデータは利用者本人のみが閲覧でき、外部のサーバーへ送信されることはありません。</li>
   </ul>
 
-  <h2>取得する情報</h2>
+  <h2>要求する権限（スコープ）</h2>
+  <p>本ツールが Google アカウントに要求する権限は、以下の<strong>1つのみ</strong>です。</p>
   <ul>
-    <li>YouTube Analytics のチャンネル指標（読み取りのみ）</li>
-    <li>取得結果を書き込むための、利用者本人の Google スプレッドシートへのアクセス</li>
+    <li>
+      <strong>YouTube Analytics のチャンネル指標（読み取り専用）</strong><br>
+      <code>https://www.googleapis.com/auth/yt-analytics.readonly</code>
+    </li>
   </ul>
-  <p>いずれも Google アカウントの認証画面で利用者本人が許可した範囲でのみ行われます。詳細は<a href="privacy/">プライバシーポリシー</a>をご確認ください。</p>
+  <p>上記以外の Google ユーザーデータへはアクセスしません。プロフィール情報やメールアドレスの取得、Google ドライブ上のファイルへのアクセスは行いません。権限の付与は、Google アカウントの認証画面で利用者本人が許可した場合にのみ行われます。詳細は<a href="privacy/">プライバシーポリシー</a>をご確認ください。</p>
 
   <div class="note">
     <strong>本ツールは Google LLC および YouTube の公式サービスではありません。</strong><br>

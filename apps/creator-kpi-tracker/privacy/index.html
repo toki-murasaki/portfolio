@@ -26,6 +26,9 @@
   ul { margin: 0 0 16px; padding-left: 1.4em; }
   li { margin-bottom: 8px; }
   a { color: #1666b0; }
+  code { font-family: Consolas, "Courier New", monospace; font-size: 0.9em;
+         background: #f2f2f2; border: 1px solid #e0e0e0; border-radius: 3px;
+         padding: 1px 5px; word-break: break-all; }
   .lead { color: #555; margin-bottom: 32px; }
   .note {
     background: #f7f7f7;
@@ -50,14 +53,16 @@
   </p>
   <p>本ツールに関するお問い合わせ、データの削除依頼は、上記メールアドレス宛にご連絡ください。</p>
 
-  <h2>2. 取得する Google ユーザーデータ</h2>
-  <p>本ツールは、利用者本人が Google アカウントの認証画面で許可した範囲において、以下のデータへアクセスします。</p>
+  <h2>2. 取得する Google ユーザーデータ（スコープ）</h2>
+  <p>本ツールが Google アカウントに要求する権限は、利用者本人が認証画面で許可した以下の<strong>1つのスコープのみ</strong>です。</p>
   <ul>
-    <li><strong>YouTube Analytics のデータ（読み取りのみ）</strong>：利用者本人が管理する YouTube チャンネルの再生回数、視聴時間、登録者数、その他の統計指標。</li>
-    <li><strong>Google スプレッドシートへのアクセス</strong>：取得した指標を、利用者本人が管理する非公開のスプレッドシートへ書き込むために使用します。</li>
-    <li><strong>基本的なアカウント識別情報</strong>：認証したアカウントを識別するために、Google から提供されるメールアドレス等の基本情報を認証処理の範囲で利用します。</li>
+    <li>
+      <strong>YouTube Analytics のデータ（読み取り専用）</strong><br>
+      <code>https://www.googleapis.com/auth/yt-analytics.readonly</code><br>
+      利用者本人が管理する YouTube チャンネルの再生回数、視聴時間、登録者数、その他の統計指標を取得します。
+    </li>
   </ul>
-  <p>本ツールが動画やチャンネルの内容を投稿・編集・削除することはありません。また、利用者以外のチャンネルのデータを取得することもありません。</p>
+  <p>本ツールは、上記スコープの範囲外にある Google ユーザーデータを一切取得しません。具体的には、氏名・メールアドレス等のプロフィール情報、連絡先、Google ドライブ上のファイルへアクセスすることはありません。また、動画やチャンネルの内容を投稿・編集・削除すること、利用者以外のチャンネルのデータを取得することもありません。</p>
 
   <h2>3. データの利用目的</h2>
   <ul>
@@ -93,7 +98,7 @@
     <li>Google API との通信は、すべて HTTPS による暗号化通信で行います。</li>
     <li>認証には Google の OAuth 2.0 を使用し、Google アカウントのパスワードを本ツールが取得・保存することはありません。</li>
     <li>トークンは利用者の PC 内にのみ保存し、外部へ送信しません。</li>
-    <li>取得するアクセス権限は、目的の達成に必要な最小限の範囲に限定しています。</li>
+    <li>取得するアクセス権限は、読み取り専用スコープ 1 つのみに限定しています。Google ユーザーデータへの書き込み権限は要求しません。</li>
   </ul>
 
   <h2>11. Google API Services User Data Policy への準拠</h2>
