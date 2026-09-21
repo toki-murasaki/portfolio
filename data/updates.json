@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-09-21",
+    "text": "YouTubeに動画が投稿されました。",
+    "link": "https://youtu.be/bky1pmMQf9U",
+    "source": "auto"
+  },
+  {
     "date": "2026-09-20",
     "text": "YouTubeにショート動画が投稿されました。",
     "link": "https://youtube.com/shorts/4btQ3a3GxUc",
@@ -543,9 +549,5 @@
   {
     "date": "2026-06-01",
     "text": "FANBOX、Fantiaの記事を更新しました。"
-  },
-  {
-    "date": "2026-05-31",
-    "text": "メロンブックスにてコミティア156新刊の予約販売を開始しました。"
   }
 ]
