@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-09-22",
+    "text": "YouTubeにショート動画が投稿されました。",
+    "link": "https://youtube.com/shorts/4YE2bke7tMs",
+    "source": "auto"
+  },
+  {
     "date": "2026-09-21",
     "text": "YouTubeに動画が投稿されました。",
     "link": "https://youtu.be/bky1pmMQf9U",
@@ -545,9 +551,5 @@
   {
     "date": "2026-06-03",
     "text": "HPにイベント情報、新着情報を表示する欄を追加しました。"
-  },
-  {
-    "date": "2026-06-01",
-    "text": "FANBOX、Fantiaの記事を更新しました。"
   }
 ]
