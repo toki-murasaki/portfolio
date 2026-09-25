@@ -2,6 +2,12 @@
   {
     "date": "2026-09-25",
     "text": "YouTubeに動画が投稿されました。",
+    "link": "https://youtu.be/HksXFvJBWsI",
+    "source": "auto"
+  },
+  {
+    "date": "2026-09-25",
+    "text": "YouTubeに動画が投稿されました。",
     "link": "https://youtu.be/ZHp8IR3gliw",
     "source": "auto"
   },
@@ -551,9 +557,5 @@
   {
     "date": "2026-06-09",
     "text": "BOOTHにてコミティア156グッズの通販を開始しました。"
-  },
-  {
-    "date": "2026-06-07",
-    "text": "コミティア156事後通販、支援者様先行アクセスを開始しました。詳細はFANBOX記事をご覧ください。同時にBOOTHにて一部過去グッズの再販を開始しました。"
   }
 ]
