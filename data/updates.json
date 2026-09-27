@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-09-28",
+    "text": "YouTubeに動画が投稿されました。",
+    "link": "https://youtu.be/Cq_gFP6Plrg",
+    "source": "auto"
+  },
+  {
     "date": "2026-09-27",
     "text": "noteに記事を公開しました。",
     "link": "https://note.com/toki_murasaki/n/nec66a4df295d",
@@ -559,9 +565,5 @@
   {
     "date": "2026-06-24",
     "text": "FANBOX、Fantia記事を更新しました。"
-  },
-  {
-    "date": "2026-06-16",
-    "text": "FANBOX記事を更新しました。"
   }
 ]
