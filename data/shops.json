@@ -1,10 +1,10 @@
 {
   "booth": {
-    "message": "C108事後通販受付終了。※入荷時に少数在庫復活の可能性あり",
+    "message": "C108新刊 在庫少数あり！",
     "publishAt": ""
   },
   "melon": {
-    "message": "C108新刊予約販売受付中！",
+    "message": "C108新刊販売中！",
     "publishAt": ""
   },
   "dlsite": {
