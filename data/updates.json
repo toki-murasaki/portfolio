@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-10-01",
+    "text": "YouTubeに動画が投稿されました。",
+    "link": "https://youtu.be/Qxk-HASuCgs",
+    "source": "auto"
+  },
+  {
     "date": "2026-09-30",
     "text": "YouTubeに動画が投稿されました。",
     "link": "https://youtu.be/P88tFdld94I",
@@ -566,10 +572,6 @@
   },
   {
     "date": "2026-07-05",
-    "text": "FANBOX記事を更新しました。"
-  },
-  {
-    "date": "2026-07-01",
     "text": "FANBOX記事を更新しました。"
   }
 ]
