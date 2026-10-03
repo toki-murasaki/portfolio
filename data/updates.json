@@ -2,6 +2,12 @@
   {
     "date": "2026-10-03",
     "text": "YouTubeに動画が投稿されました。",
+    "link": "https://youtu.be/obnoXXIfEOk",
+    "source": "auto"
+  },
+  {
+    "date": "2026-10-03",
+    "text": "YouTubeに動画が投稿されました。",
     "link": "https://youtu.be/kMvYWOY-MjQ",
     "source": "auto"
   },
@@ -571,9 +577,5 @@
   {
     "date": "2026-07-12",
     "text": "HPにnoteリンクを追加しました。note記事を投稿しました。"
-  },
-  {
-    "date": "2026-07-09",
-    "text": "FANBOX記事、pixivを更新しました。"
   }
 ]
