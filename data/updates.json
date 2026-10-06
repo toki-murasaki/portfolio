@@ -2,6 +2,12 @@
   {
     "date": "2026-10-06",
     "text": "YouTubeに動画が投稿されました。",
+    "link": "https://youtu.be/xkjNW7ktJ-4",
+    "source": "auto"
+  },
+  {
+    "date": "2026-10-06",
+    "text": "YouTubeに動画が投稿されました。",
     "link": "https://youtu.be/MonG1eC6qXc",
     "source": "auto"
   },
@@ -582,10 +588,5 @@
     "date": "2026-07-25",
     "text": "BOOTHにてC108新刊予約販売が開始されました。",
     "link": "https://tokinchi.booth.pm/items/8640015"
-  },
-  {
-    "date": "2026-07-23",
-    "text": "メロンブックスにてC108新刊予約販売が開始されました。",
-    "link": "https://www.melonbooks.co.jp/detail/detail.php?product_id=3756380"
   }
 ]
