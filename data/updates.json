@@ -1,6 +1,12 @@
 [
   {
     "date": "2026-10-14",
+    "text": "YouTubeにショート動画が投稿されました。",
+    "link": "https://youtube.com/shorts/5XpNOuXMukA",
+    "source": "auto"
+  },
+  {
+    "date": "2026-10-14",
     "text": "YouTubeに動画が投稿されました。",
     "link": "https://youtu.be/vRESJbX-UHs",
     "source": "auto"
@@ -588,10 +594,5 @@
     "text": "YouTubeにショート動画が投稿されました。",
     "link": "https://youtube.com/shorts/Crgfggu-euQ",
     "source": "auto"
-  },
-  {
-    "date": "2026-08-05",
-    "text": "Instagramのアカウントを開設しました！ぜひフォローよろしくお願いします！",
-    "link": "https://www.instagram.com/toki_ship8/?hl=ja"
   }
 ]
