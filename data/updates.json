@@ -1,5 +1,17 @@
 [
   {
+    "date": "2026-10-18",
+    "text": "YouTubeに動画が投稿されました。",
+    "link": "https://youtu.be/aD6zqp8nUKE",
+    "source": "auto"
+  },
+  {
+    "date": "2026-10-18",
+    "text": "noteに記事を公開しました。",
+    "link": "https://note.com/toki_murasaki/n/n3838d413bd2a",
+    "source": "auto"
+  },
+  {
     "date": "2026-10-17",
     "text": "YouTubeに動画が投稿されました。",
     "link": "https://youtu.be/J_1LGqDpdCg",
@@ -582,18 +594,6 @@
     "date": "2026-08-12",
     "text": "YouTubeに動画が投稿されました。",
     "link": "https://youtu.be/BVtzSsFssAA",
-    "source": "auto"
-  },
-  {
-    "date": "2026-08-11",
-    "text": "YouTubeにショート動画が投稿されました。",
-    "link": "https://youtube.com/shorts/2X3PLezVAYw",
-    "source": "auto"
-  },
-  {
-    "date": "2026-08-11",
-    "text": "YouTubeにショート動画が投稿されました。",
-    "link": "https://youtube.com/shorts/TDOGqGEqh0Y",
     "source": "auto"
   }
 ]
