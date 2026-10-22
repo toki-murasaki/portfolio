@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-10-23",
+    "text": "YouTubeに動画が投稿されました。",
+    "link": "https://youtu.be/yWXsRQ_h7wg",
+    "source": "auto"
+  },
+  {
     "date": "2026-10-22",
     "text": "YouTubeに動画が投稿されました。",
     "link": "https://youtu.be/dM_02QDgeMo",
@@ -589,11 +595,5 @@
     "date": "2026-08-16",
     "text": "FANBOX記事を更新しました。",
     "link": "https://toki-murasaki.fanbox.cc/posts/12435298"
-  },
-  {
-    "date": "2026-08-16",
-    "text": "YouTubeにショート動画が投稿されました。",
-    "link": "https://youtube.com/shorts/TEhQXGBu9dc",
-    "source": "auto"
   }
 ]
