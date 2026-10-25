@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-10-25",
+    "text": "noteに記事を公開しました。",
+    "link": "https://note.com/toki_murasaki/n/ne87c537ef7b8",
+    "source": "auto"
+  },
+  {
     "date": "2026-10-24",
     "text": "YouTubeに動画が投稿されました。",
     "link": "https://youtu.be/EHVHsB8yDrQ",
@@ -590,11 +596,5 @@
     "text": "YouTubeにショート動画が投稿されました。",
     "link": "https://youtube.com/shorts/gl_aVzENidY",
     "source": "auto"
-  },
-  {
-    "date": "2026-08-18",
-    "text": "C108事後通販（一般の部）を開始しました。",
-    "link": "https://tokinchi.booth.pm/",
-    "publishAt": "2026-08-18T22:00:00+09:00"
   }
 ]
