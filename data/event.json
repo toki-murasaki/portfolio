@@ -4,9 +4,11 @@
     "weekday": "土",
     "name": "VGGC12th",
     "venue": "東京流通センター",
-    "images": [],
-    "link_url": "https://vggc.info/",
-    "link_label": "イベント公式サイト"
+    "images": [
+      "images/event-oshinagaki1.jpg"
+    ],
+    "link_url": "https://toki-murasaki.fanbox.cc/posts/12844188",
+    "link_label": "お取り置き受付中！締切り11/8まで！"
   },
   {
     "date": "2026-12-30",
