@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-11-01",
+    "text": "YouTubeに動画が投稿されました。",
+    "link": "https://youtu.be/nvE3wq5UFrY",
+    "source": "auto"
+  },
+  {
     "date": "2026-10-31",
     "text": "YouTubeに動画が投稿されました。",
     "link": "https://youtu.be/BReT_gcmhk8",
@@ -590,12 +596,6 @@
     "date": "2026-08-23",
     "text": "YouTubeに動画が投稿されました。",
     "link": "https://youtu.be/DIWUF6H3u_Y",
-    "source": "auto"
-  },
-  {
-    "date": "2026-08-22",
-    "text": "YouTubeに動画が投稿されました。",
-    "link": "https://youtu.be/1PnwEqo_NO0",
     "source": "auto"
   }
 ]
