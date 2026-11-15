@@ -9,14 +9,12 @@
   haiiro.jpg   — 灰色ちゃんセクションに表示されます
 
 ■ ギャラリー作品
-  work01.jpg
-  work02.jpg
-  work03.jpg
-  work04.jpg
-  work05.jpg
-  work06.jpg
-  … （work07.jpg 以降を追加する場合は index.html の
-      galleryImages 配列にエントリを追記してください）
+  管理ページ（admin/index.html）の Gallery 欄から差し替えます。
+  差し替えた画像は images/gallery/<日時>-<乱数>.<拡張子> という
+  重複しない名前で自動保存されるため、ファイル名を考える必要はありません。
+  表示順・タイトル・表示位置は data/gallery.json に保存されます。
+  旧方式の work01.jpg などは既存の共有URLのため残してあります。
+  使わなくなった画像は自動では削除されません（必要なら手動で整理）。
 
 ■ 推奨サイズ
   プロフィール : 600×800px 以上 (縦長)
