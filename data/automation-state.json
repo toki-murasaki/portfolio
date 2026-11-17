@@ -1,5 +1,17 @@
 {
-  "lastYoutubeVideoId": "OtIEIIfZeCc",
+  "lastYoutubeVideoId": "XjoKbsvrp3g",
   "lastNoteUrl": "https://note.com/toki_murasaki/n/ne87c537ef7b8",
-  "pendingYoutube": []
+  "pendingYoutube": [
+    {
+      "videoId": "XjoKbsvrp3g",
+      "title": "収益化したからメンシ何するか話そう",
+      "rssLink": "https://www.youtube.com/watch?v=XjoKbsvrp3g",
+      "published": "2026-11-17T08:46:55+00:00",
+      "firstSeen": "2026-11-17T09:12:11.606Z",
+      "unknownCount": 1,
+      "lastStatus": "unknown",
+      "lastReason": "videoDetails なし",
+      "lastChecked": "2026-11-17T09:12:11.606Z"
+    }
+  ]
 }
