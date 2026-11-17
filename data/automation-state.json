@@ -1,5 +1,5 @@
 {
-  "lastYoutubeVideoId": "XjoKbsvrp3g",
+  "lastYoutubeVideoId": "CVTwgPvze8w",
   "lastNoteUrl": "https://note.com/toki_murasaki/n/ne87c537ef7b8",
   "pendingYoutube": [
     {
@@ -8,10 +8,21 @@
       "rssLink": "https://www.youtube.com/watch?v=XjoKbsvrp3g",
       "published": "2026-11-17T08:46:55+00:00",
       "firstSeen": "2026-11-17T09:12:11.606Z",
+      "unknownCount": 2,
+      "lastStatus": "unknown",
+      "lastReason": "視聴ページ HTTP 429",
+      "lastChecked": "2026-11-17T18:37:27.810Z"
+    },
+    {
+      "videoId": "CVTwgPvze8w",
+      "title": "メンシバッジつくろう",
+      "rssLink": "https://www.youtube.com/watch?v=CVTwgPvze8w",
+      "published": "2026-11-17T13:05:12+00:00",
+      "firstSeen": "2026-11-17T18:37:27.810Z",
       "unknownCount": 1,
       "lastStatus": "unknown",
-      "lastReason": "videoDetails なし",
-      "lastChecked": "2026-11-17T09:12:11.606Z"
+      "lastReason": "視聴ページ HTTP 429",
+      "lastChecked": "2026-11-17T18:37:27.810Z"
     }
   ]
 }
