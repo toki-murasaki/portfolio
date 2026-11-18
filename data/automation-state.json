@@ -1,5 +1,5 @@
 {
-  "lastYoutubeVideoId": "XjoKbsvrp3g",
+  "lastYoutubeVideoId": "D6nE9u5TXh4",
   "lastNoteUrl": "https://note.com/toki_murasaki/n/ne87c537ef7b8",
   "pendingYoutube": [
     {
@@ -8,21 +8,32 @@
       "rssLink": "https://www.youtube.com/watch?v=XjoKbsvrp3g",
       "published": "2026-11-17T22:19:31+00:00",
       "firstSeen": "2026-11-17T09:12:11.606Z",
-      "unknownCount": 3,
+      "unknownCount": 4,
       "lastStatus": "unknown",
       "lastReason": "videoDetails なし",
-      "lastChecked": "2026-11-18T01:19:03.867Z"
+      "lastChecked": "2026-11-18T09:09:29.307Z"
     },
     {
       "videoId": "CVTwgPvze8w",
       "title": "メンシバッジつくろう",
       "rssLink": "https://www.youtube.com/watch?v=CVTwgPvze8w",
-      "published": "2026-11-17T13:05:12+00:00",
+      "published": "2026-11-18T04:40:53+00:00",
       "firstSeen": "2026-11-17T18:37:27.810Z",
-      "unknownCount": 2,
+      "unknownCount": 3,
       "lastStatus": "unknown",
       "lastReason": "videoDetails なし",
-      "lastChecked": "2026-11-18T01:19:03.867Z"
+      "lastChecked": "2026-11-18T09:09:29.307Z"
+    },
+    {
+      "videoId": "D6nE9u5TXh4",
+      "title": "いろはちゃん衣装ういママ描く#1 ｜無言お絵描き配信【Draw With Me】",
+      "rssLink": "https://www.youtube.com/watch?v=D6nE9u5TXh4",
+      "published": "2026-11-18T07:14:28+00:00",
+      "firstSeen": "2026-11-18T09:09:29.307Z",
+      "unknownCount": 1,
+      "lastStatus": "unknown",
+      "lastReason": "videoDetails なし",
+      "lastChecked": "2026-11-18T09:09:29.307Z"
     }
   ]
 }
