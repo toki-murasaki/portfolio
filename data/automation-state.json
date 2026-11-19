@@ -8,10 +8,10 @@
       "rssLink": "https://www.youtube.com/watch?v=XjoKbsvrp3g",
       "published": "2026-11-17T22:19:31+00:00",
       "firstSeen": "2026-11-17T09:12:11.606Z",
-      "unknownCount": 6,
+      "unknownCount": 7,
       "lastStatus": "unknown",
       "lastReason": "videoDetails なし",
-      "lastChecked": "2026-11-19T00:21:35.106Z"
+      "lastChecked": "2026-11-19T07:56:58.808Z"
     },
     {
       "videoId": "CVTwgPvze8w",
@@ -19,10 +19,10 @@
       "rssLink": "https://www.youtube.com/watch?v=CVTwgPvze8w",
       "published": "2026-11-18T04:40:53+00:00",
       "firstSeen": "2026-11-17T18:37:27.810Z",
-      "unknownCount": 5,
+      "unknownCount": 6,
       "lastStatus": "unknown",
       "lastReason": "videoDetails なし",
-      "lastChecked": "2026-11-19T00:21:35.106Z"
+      "lastChecked": "2026-11-19T07:56:58.808Z"
     },
     {
       "videoId": "D6nE9u5TXh4",
@@ -30,10 +30,10 @@
       "rssLink": "https://www.youtube.com/watch?v=D6nE9u5TXh4",
       "published": "2026-11-18T07:14:28+00:00",
       "firstSeen": "2026-11-18T09:09:29.307Z",
-      "unknownCount": 3,
+      "unknownCount": 4,
       "lastStatus": "unknown",
       "lastReason": "videoDetails なし",
-      "lastChecked": "2026-11-19T00:21:35.106Z"
+      "lastChecked": "2026-11-19T07:56:58.808Z"
     }
   ]
 }
