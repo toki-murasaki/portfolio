@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-11-22",
+    "text": "YouTubeに配信アーカイブが公開されました。",
+    "link": "https://youtu.be/SfS1hez-Moc",
+    "source": "auto"
+  },
+  {
     "date": "2026-11-21",
     "text": "YouTubeに配信アーカイブが公開されました。",
     "link": "https://youtu.be/T5xuT-stzns",
@@ -591,12 +597,6 @@
     "date": "2026-09-06",
     "text": "YouTubeにショート動画が投稿されました。",
     "link": "https://youtube.com/shorts/Vdm8fqFDa-8",
-    "source": "auto"
-  },
-  {
-    "date": "2026-09-06",
-    "text": "noteに記事を公開しました。",
-    "link": "https://note.com/toki_murasaki/n/n300d4f2772fe",
     "source": "auto"
   }
 ]
