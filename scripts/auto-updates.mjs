@@ -358,6 +358,16 @@ export async function fetchChannelTabs() {
  */
 export async function inspectYoutubeVideoWithFallback(videoId, loadTabs, inspectWatch = inspectYoutubeVideo) {
   const w = await inspectWatch(videoId);
+  if (w.kind === 'video') {
+    // ショートかどうかは、一覧のどのタブに載っているかで分かれば確実（/shorts/ への別アクセスが制限されても判定できる）。
+    // 一覧で分からなければ format を付けず、従来の detectYoutubeFormat に任せる。
+    let format;
+    try {
+      const t = classifyFromChannelTabs(videoId, await loadTabs());
+      if (t.kind === 'video') format = t.format;
+    } catch { /* 一覧が取れなくても視聴ページの判定は有効 */ }
+    return { ...w, source: '視聴ページ', ...(format ? { format } : {}) };
+  }
   if (w.kind !== 'unknown') return { ...w, source: '視聴ページ' };
   const t = classifyFromChannelTabs(videoId, await loadTabs());
   if (t.kind !== 'unknown') return { ...t, source: 'チャンネル一覧', reason: `${t.reason} ／視聴ページ: ${w.reason}` };
