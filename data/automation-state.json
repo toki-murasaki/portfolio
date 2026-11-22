@@ -1,61 +1,21 @@
 {
   "lastYoutubeVideoId": "T5xuT-stzns",
   "lastNoteUrl": "https://note.com/toki_murasaki/n/ne87c537ef7b8",
-  "pendingYoutube": [
-    {
-      "videoId": "D6nE9u5TXh4",
-      "title": "いろはちゃん衣装ういママ描く#1 ｜無言お絵描き配信【Draw With Me】",
-      "rssLink": "https://www.youtube.com/watch?v=D6nE9u5TXh4",
-      "published": "2026-11-18T07:14:28+00:00",
-      "firstSeen": "2026-11-18T09:09:29.307Z",
-      "unknownCount": 14,
-      "lastStatus": "unknown",
-      "lastReason": "videoDetails なし",
-      "lastChecked": "2026-11-22T07:28:12.770Z"
-    },
-    {
-      "videoId": "V3YknlpPy0Y",
-      "title": "いろはちゃん衣装ういママ描く#2 ｜無言お絵描き配信【Draw With Me】",
-      "rssLink": "https://www.youtube.com/watch?v=V3YknlpPy0Y",
-      "published": "2026-11-19T11:59:22+00:00",
-      "firstSeen": "2026-11-19T17:21:56.555Z",
-      "unknownCount": 10,
-      "lastStatus": "unknown",
-      "lastReason": "videoDetails なし",
-      "lastChecked": "2026-11-22T07:28:12.770Z"
-    },
-    {
-      "videoId": "-EAJVG1kJGg",
-      "title": "VGGC12thにサークル参加した1日｜設営・頒布・撤収まで全部見せます",
-      "rssLink": "https://www.youtube.com/watch?v=-EAJVG1kJGg",
-      "published": "2026-11-19T11:24:08+00:00",
-      "firstSeen": "2026-11-19T17:21:56.555Z",
-      "unknownCount": 10,
-      "lastStatus": "unknown",
-      "lastReason": "videoDetails なし",
-      "lastChecked": "2026-11-22T07:28:12.770Z"
-    },
-    {
-      "videoId": "p5P7-eiXTXs",
-      "title": "いろはちゃん衣装ういママ描く#3 ｜無言お絵描き配信【Draw With Me】",
-      "rssLink": "https://www.youtube.com/watch?v=p5P7-eiXTXs",
-      "published": "2026-11-20T05:56:50+00:00",
-      "firstSeen": "2026-11-20T07:13:47.162Z",
-      "unknownCount": 8,
-      "lastStatus": "unknown",
-      "lastReason": "videoDetails なし",
-      "lastChecked": "2026-11-22T07:28:12.770Z"
-    },
-    {
-      "videoId": "T5xuT-stzns",
-      "title": "ラミィちゃん衣装ういママ描く#1 ｜無言お絵描き配信【Draw With Me】",
-      "rssLink": "https://www.youtube.com/watch?v=T5xuT-stzns",
-      "published": "2026-11-21T06:58:35+00:00",
-      "firstSeen": "2026-11-21T12:38:11.337Z",
-      "unknownCount": 4,
-      "lastStatus": "unknown",
-      "lastReason": "videoDetails なし",
-      "lastChecked": "2026-11-22T07:28:12.770Z"
-    }
+  "pendingYoutube": [],
+  "seenYoutubeIds": [
+    "T5xuT-stzns",
+    "p5P7-eiXTXs",
+    "V3YknlpPy0Y",
+    "-EAJVG1kJGg",
+    "D6nE9u5TXh4",
+    "CVTwgPvze8w",
+    "XjoKbsvrp3g",
+    "OtIEIIfZeCc",
+    "AYrIr7D5Fl4",
+    "ONGaYEc_ZDU",
+    "gFmaqqTmhv8",
+    "NnU_unlgjY4",
+    "M1m4iyTSEow",
+    "G3gMnIZHuUQ"
   ]
 }
