@@ -1,5 +1,11 @@
 [
   {
+    "date": "2026-11-26",
+    "text": "YouTubeに配信アーカイブが公開されました。",
+    "link": "https://youtu.be/mbOgOA00WPg",
+    "source": "auto"
+  },
+  {
     "date": "2026-11-25",
     "text": "YouTubeに配信アーカイブが公開されました。",
     "link": "https://youtu.be/LibI1DHyDlI",
@@ -591,12 +597,6 @@
     "date": "2026-09-08",
     "text": "YouTubeに配信アーカイブが公開されました。",
     "link": "https://youtu.be/MFoHKD0k9cY",
-    "source": "auto"
-  },
-  {
-    "date": "2026-09-07",
-    "text": "YouTubeに配信アーカイブが公開されました。",
-    "link": "https://youtu.be/ARCgEJ9rbrk",
     "source": "auto"
   }
 ]
