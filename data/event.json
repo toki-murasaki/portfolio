@@ -1,17 +1,5 @@
 [
   {
-    "date": "2026-11-14",
-    "weekday": "土",
-    "name": "VGGC12th",
-    "venue": "東京流通センター",
-    "images": [
-      "images/event-oshinagaki1.jpg",
-      "images/event-oshinagaki2.jpg"
-    ],
-    "link_url": "https://toki-murasaki.fanbox.cc/posts/12932683",
-    "link_label": "事後通販先行アクセス期間中！"
-  },
-  {
     "date": "2026-12-30",
     "weekday": "水",
     "name": "コミックマーケット109",
@@ -20,6 +8,15 @@
       "images/event2-oshinagaki1.png",
       "images/event2-oshinagaki2.png"
     ],
+    "link_url": "",
+    "link_label": ""
+  },
+  {
+    "date": "2027-03-06",
+    "weekday": "土",
+    "name": "VGGC13th",
+    "venue": "東京流通センター",
+    "images": [],
     "link_url": "",
     "link_label": ""
   }
