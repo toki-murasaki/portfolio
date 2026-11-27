@@ -1,19 +1,7 @@
 {
   "lastYoutubeVideoId": "kXS9_IPESBE",
   "lastNoteUrl": "https://note.com/toki_murasaki/n/ne87c537ef7b8",
-  "pendingYoutube": [
-    {
-      "videoId": "kXS9_IPESBE",
-      "title": "ニーハイ灰色ちゃん描く",
-      "rssLink": "https://www.youtube.com/watch?v=kXS9_IPESBE",
-      "published": "2026-11-27T13:31:48+00:00",
-      "firstSeen": "2026-11-27T15:35:43.213Z",
-      "unknownCount": 0,
-      "lastStatus": "live",
-      "lastReason": "配信中（ライブタブ） ／視聴ページ: videoDetails なし(playability=LOGIN_REQUIRED: ログインして bot ではないことを確認してください)",
-      "lastChecked": "2026-11-27T15:35:43.213Z"
-    }
-  ],
+  "pendingYoutube": [],
   "seenYoutubeIds": [
     "kXS9_IPESBE",
     "UsXH1sSKbgg",
